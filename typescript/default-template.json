@@ -1,0 +1,62 @@
+{
+	"サニタイズ文字一覧": {
+		"'": "&#39; シングルクォート",
+		"\"": "&#34; ダブルクォート",
+		"<": "&#60; 小なり",
+		">": "&#62; 大なり",
+		"&": "&#38; ＆記号",
+		"`": "&#96; バッククォート",
+
+		"/": "&#47; スラッシュ --使わない--"
+	},
+	"javascript": [
+		{
+			"type": "予約語",
+			"class": "keyword",
+			"regex": "\\b(break|case|catch|continue|debugger|default|delete|do|else|finally|for|function|if|in|instanceof|new|return|switch|this|throw|try|typeof|var|while|with|class|enum|export|extends|import|super|implements|interface|let|package|private|protected|public|static|yield)\\b"
+		},
+		{
+			"type": "正規表現",
+			"class": "regexp",
+			"regex": "(\\/.+?[^\\\\]\\/[gim]*)\\b"
+		},
+
+		{
+			"type": "単一行・行末コメント",
+			"class": "comment",
+			"regex": "((?:\\/){2}.*?)(?:[\\r\\n]+|$)",
+			"str": "`comment`$1``\n"
+		},
+		{
+			"type": "/* 複数行コメント */",
+			"class": "comment",
+			"regex": "(\\/\\*[\\w\\W]+?.*\\/)"
+		},
+
+		{
+			"type:": "//文字列リテラル(&#39;シングルクォート, &#34;ダブルクォート, &#96;バッククォート)",
+			"class": "literal",
+			"regex": "(&#39;|&#34;|&#96;)([^\\1]*?)\\1",
+			"str": "`literal`$1$2$1``"
+		},
+		{
+			"type": "関数定義と思われるもの。コール箇所をハイライト",
+			"class": "function",
+			"regex": "\\.([^\\d\\.]+[\\d\\w]*?\\s*)\\(",
+			"str": ".`function`$1``("
+		},
+
+		{
+			"type": "数字リテラル",
+			"class": "premitive",
+			"regex": "([^#\\d]|^\\|\\b)(-?\\d+\\.*\\d*)\\b",
+			"str": "$1`premitive`$2``"
+		},
+		{
+			"type": "プリミティブ",
+			"class": "premitive",
+			"regex": "\\b(true|false|NaN|null|undefined|void)\\b"
+		}
+
+	]
+}

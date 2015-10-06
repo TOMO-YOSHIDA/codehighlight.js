@@ -1,0 +1,6 @@
+*.js
+/public
+/node_modules
+/typings
+
+

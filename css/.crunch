@@ -1,0 +1,22 @@
+{
+	"compilers": {
+		"less": {
+			"compress": false,
+			"ieCompat": false,
+			"strictMath": true,
+			"strictUnits": false,
+			"javascriptEnabled": false,
+			"sourcemap": false
+		}
+	},
+	"files": {
+		"vscode.less": {
+			"output": "vscode.css",
+			"compilers": [
+				"less"
+			],
+			"lastCrunch": "Thu Oct 01 2015 15:29:33 GMT+0900 (JST)",
+			"sources": []
+		}
+	}
+}

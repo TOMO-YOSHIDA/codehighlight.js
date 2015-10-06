@@ -1,0 +1,93 @@
+// base
+@bg-color:#333;
+@color:#EEE;
+// title
+@title-bg:#666;
+@title-color:#FFF;
+
+//comment
+@comment-color:#393;
+
+//premitive
+@premitive:#99F;
+
+//予約語
+@keyword:#F3F;
+
+//function
+@function:#C90;
+
+//リテラル(文字列、数字など)
+@literal:@premitive;
+
+//正規表現
+@regexp:@premitive;
+
+//shadow
+@shadow-color:#666;
+@shadow:1px 1px 2px @shadow-color;
+
+//tab size(1char = 0.5em)
+@tab-size:12.0em;
+
+pre.code.highlight {
+	margin: 0.5em;
+	border:1px solid @color;
+	box-shadow:@shadow;
+	background: @bg-color;
+	color:@color;
+	line-height: 1.3em;
+	overflow-x:auto;
+
+	font-family:serif mono-space;
+
+	.title {
+		background:@title-bg;
+		color:@title-color;
+		font-weight:bold;
+		padding:2px 6px;
+	}
+	// 下に行くほど強い
+	.premitive {
+		color:@premitive;
+	}
+
+	.keyword{
+		color:@keyword;
+	}
+
+	.function{
+		color:@function;
+	}
+
+	.regexp{
+		color:@regexp;
+	}
+
+	.literal {
+		color:@literal;
+		* {
+			// literal内のkeywordとかは無視
+			color:@literal;
+		}
+	}
+
+	.comment {
+		color:@comment-color;
+		* {
+			// comment内のliteralやkeywordは無視
+			color:@comment-color;
+		}
+	}
+
+	//行番号
+	.ln{
+		display: inline-block;
+		width:2em;
+		text-align: right;
+		padding-right:0.5em;
+		margin-right:1em;
+		color:@color;
+		border-right:3px solid @shadow-color; //コードとの境界線
+	}
+}
