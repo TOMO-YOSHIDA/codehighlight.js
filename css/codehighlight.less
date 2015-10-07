@@ -1,21 +1,21 @@
 // base
-@bg-color:#333;
-@color:#EEE;
+@bg-color:#FEFEFE;
+@color:#333;
 // title
 @title-bg:#666;
 @title-color:#FFF;
 
 //comment
-@comment-color:#393;
+@comment-color:#AAA;
 
 //premitive
-@premitive:#99F;
+@premitive:#00C;
 
 //予約語
-@keyword:#F3F;
+@keyword:#909;
 
 //function
-@function:#C90;
+@function:#C60;
 
 //リテラル(文字列、数字など)
 @literal:@premitive;
@@ -36,20 +36,24 @@ pre.code.highlight {
 	box-shadow:@shadow;
 	background: @bg-color;
 	color:@color;
-	line-height: 1.3em;
 	overflow-x:auto;
 
-	font-family:serif mono-space;
+	code, .title {
+		font-family:"Source Han Code JP" "Source Code Pro" "MS GOTHIC" "Meiryo" "Hiragino Kaku Gothic ProN W3" sans-serif mono-space;
+		font-size:9pt;
+		line-height: 1.2;
+	}
 
 	.title {
 		background:@title-bg;
 		color:@title-color;
-		font-weight:bold;
 		padding:2px 6px;
+		width:100%;
 	}
 	// 下に行くほど強い
 	.premitive {
 		color:@premitive;
+		font-weight:bold;
 	}
 
 	.keyword{

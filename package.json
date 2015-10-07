@@ -1,37 +1,40 @@
 {
-	"name": "codehighlight.js",
-	"version": "0.1.0",
-	"scripts": {
-		"start":"HTTP_PORT=8081 node ./public/js/app.js"
-	},
-	"devDependencies":{
-		"gulp": "*",
-		"del": "*",
-		"run-sequence": "*",
-		"gulp-filter": "*",
-		"gulp-less" : "*",
-		"tsc": "*",
-		"gulp-plumber": "*",
-		"gulp-typescript": "*",
-
-		"express": "4.x",
-		"jade": "*",
-		"connect":"*",
-		"errorhandler":"*",
-		"body-parser":"*",
-		"method-override": "*",
-		"express-session" : "*",
-		"node-uuid" : "*",
-		"morgan" : "*",
-		"moment" : "*"
-	},
-	"other_" : {
-		"main-bower-files": "*",
-		"gulp-flatten": "*",
-		"gulp-rename": "*",
-		"gulp-concat": "*",
-		"gulp-jshint": "*",
-		"gulp-sass": "*",
-		"gulp-connect": "*"
-	}
+  "name": "codehighlight.js",
+  "version": "0.1.0",
+  "scripts": {
+    "start": "HTTP_PORT=8081 node ./public/js/app.js"
+  },
+  "devDependencies": {
+    "gulp": "*",
+    "del": "*",
+    "run-sequence": "*",
+    "gulp-filter": "*",
+    "gulp-less": "*",
+    "tsc": "*",
+    "gulp-plumber": "*",
+    "gulp-typescript": "*",
+    "express": "4.x",
+    "jade": "*",
+    "connect": "*",
+    "errorhandler": "*",
+    "body-parser": "*",
+    "method-override": "*",
+    "express-session": "*",
+    "node-uuid": "*",
+    "morgan": "*",
+    "moment": "*"
+  },
+  "other_": {
+    "main-bower-files": "*",
+    "gulp-flatten": "*",
+    "gulp-rename": "*",
+    "gulp-concat": "*",
+    "gulp-jshint": "*",
+    "gulp-sass": "*",
+    "gulp-connect": "*"
+  },
+  "dependencies": {
+    "gulp-concat": "^2.6.0",
+    "gulp-uglify": "^1.4.1"
+  }
 }

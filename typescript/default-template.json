@@ -1,4 +1,16 @@
 {
+	"version": "0.0.1",
+	"type": "javascript",
+	"alias": [
+		"javascript",
+		"typescript",
+		"js",
+		"ts",
+		"ecma",
+		"ecmascript",
+		"es5",
+		"es6"
+	],
 	"サニタイズ文字一覧": {
 		"'": "&#39; シングルクォート",
 		"\"": "&#34; ダブルクォート",
@@ -7,9 +19,10 @@
 		"&": "&#38; ＆記号",
 		"`": "&#96; バッククォート",
 
-		"/": "&#47; スラッシュ --使わない--"
+		" --此処から先は使わない--": null,
+		"/": "&#47; スラッシュ"
 	},
-	"javascript": [
+	"define": [
 		{
 			"type": "予約語",
 			"class": "keyword",
@@ -40,23 +53,23 @@
 			"str": "`literal`$1$2$1``"
 		},
 		{
-			"type": "関数定義と思われるもの。コール箇所をハイライト",
-			"class": "function",
-			"regex": "\\.([^\\d\\.]+[\\d\\w]*?\\s*)\\(",
-			"str": ".`function`$1``("
-		},
-
-		{
 			"type": "数字リテラル",
 			"class": "premitive",
-			"regex": "([^#\\d]|^\\|\\b)(-?\\d+\\.*\\d*)\\b",
+			"regex": "([\\s,\\(\\)\\{\\}\\[\\]]|^)(-?\\d*\\.*\\d*)\\b",
 			"str": "$1`premitive`$2``"
 		},
 		{
 			"type": "プリミティブ",
 			"class": "premitive",
 			"regex": "\\b(true|false|NaN|null|undefined|void)\\b"
-		}
+		},
 
+		{
+			"type": "関数定義と思われるもの。コール箇所をハイライト",
+			"class": "function",
+			"regex": "\\.([^\\d\\.]?[\\d\\w]*?\\s*)\\(",
+			"下記は無効": "クラス名から_を抜けば有効",
+			"str": ".`_function`$1``("
+		}
 	]
 }

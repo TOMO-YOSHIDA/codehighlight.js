@@ -1,5 +1,17 @@
 #codehighlight.js
 
+##開発メモ
+templateの外部化
+###JSONに持たせる情報を分ける
+* alias:アクセス用の名前
+* version:バージョン
+* templates:定義リスト
+	+ type:表示タイプ
+	+ class:表示用cssクラス
+	+ regex:マーク条件
+	+ str:変換用文字列の定義(default:`keyword`$1``)
+
+
 ##概要
 `<script type="code/hoge">〜</script>`で囲われた範囲をいい具合に整形して表示する。
 

@@ -5,11 +5,10 @@
 	<meta charset="UTF-8">
 	<title>codesnipet.js</title>
 	<link rel="stylesheet" href="./css/codehighlight.css">
-	<script src="./js/codehighlight.js"></script>
 </head>
 
 <body>
-	<script type="code/javascript" title="testcode.js">
+	<script type="code/JavaScript" title="testcode.js">
 		var a = [1,2,3,4,5];
 		Array.prototype.shuffle = function(){
 			this.sort(function(){
@@ -21,9 +20,10 @@
 
 	</script>
 
-	<script type="code/javascript" title="hoge.js">
+	<script type="code/ECMA" title="hoge.js">
 	<!--
 		/**
+			このセクションのコードに意味はありません！
 			連続行のコメント１
 			連続行のコメント２
 		*/
@@ -37,6 +37,9 @@
 		}
 		window.alert('YEAH!!'); // <-alert実行されないでしょ
 
+		var function1 = function(arg1, arg2){};
+		let fun2fnc = function(a1rg, a2rg){};
+
 		//tab	tab	tab
 		// commentにfunctionとかifとか
 		var text1 = "text1", text_2 = 'TEXT&2';
@@ -49,13 +52,21 @@
 
 	</script>
 
-	<script type='code/javascript' title='main'>
+	<script type='code/TypeScript' title='数字のテスト'>
+	090.8178.5984
+	a = .3;
+	b = 4.;
 	</script>
 
+	<!--リリース用concat.min.js-->
+	<!--<script src="./js/codehighlight.min.js"></script>-->
+
+	<!--1つずつ読み込むデバッグ用-->
+	<script src="./js/codehighlight.js"></script>
 	<script>
-		// chl.loadTemplate('javascript');
-		// chl.execute();
+		chl.loadTemplate('/js/default-template.js');
 	</script>
+
 </body>
 
 </html>
