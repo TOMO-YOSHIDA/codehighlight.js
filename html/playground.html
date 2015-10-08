@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>CodeHighlight.js / Play Ground</title>
+	<link rel="stylesheet" href="./css/codehighlight.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+	<style>
+		html{
+			height:100%;
+			margin:0;
+			padding:0;
+			tab-size:4;
+		}
+		body {
+			margin:0;
+			padding:10px 30px;
+			height:calc(100% - 20px);
+		}
+		.right {
+			text-align: right;
+		}
+
+		textarea{
+			width:100%;
+			height:30%;
+			resize: none;
+			margin:5px;
+		}
+		pre.code.highlight {
+			max-height:30%;
+		}
+	</style>
+</head>
+
+<body>
+	<select class='code-type'>
+		<option value='javascript'>Javasript</option>
+	</select>
+	<button>highlight!</button>
+<textarea>
+	/*
+		this is sample code.
+	*/
+	function(){
+		var msg = "HELLO";
+		if(true){
+			console.log(`${msg}, codehighlight.js!`);
+		}
+	};
+	// -> HELLO, codehighlight.js!
+</textarea>
+
+		<script src="./js/codehighlight.min.js"></script>
+		<script src="./javascript/playground.js"></script>
+</body>
+
+</html>

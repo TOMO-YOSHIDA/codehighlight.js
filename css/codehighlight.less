@@ -27,28 +27,30 @@
 @shadow-color:#666;
 @shadow:1px 1px 2px @shadow-color;
 
-//tab size(1char = 0.5em)
-@tab-size:12.0em;
-
 pre.code.highlight {
 	margin: 0.5em;
 	border:1px solid @color;
 	box-shadow:@shadow;
 	background: @bg-color;
 	color:@color;
-	overflow-x:auto;
+	overflow:none;
 
-	code, .title {
+	code {
+		display:block;
+		overflow:auto;
+	}
+
+	div, code {
 		font-family:"Source Han Code JP" "Source Code Pro" "MS GOTHIC" "Meiryo" "Hiragino Kaku Gothic ProN W3" sans-serif mono-space;
 		font-size:9pt;
 		line-height: 1.2;
 	}
 
-	.title {
+	div.title {
 		background:@title-bg;
 		color:@title-color;
 		padding:2px 6px;
-		width:100%;
+		margin:0;
 	}
 	// 下に行くほど強い
 	.premitive {

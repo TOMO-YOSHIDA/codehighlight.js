@@ -58,12 +58,12 @@ class CodeHighLight {
 		temps.forEach(c => c.define.forEach((c: CodeDefine) => {
 			if (!c.regex) throw "Error!! Template.CodeDefine.regex is undefined.";
 			if (!c.str) {
-				c.str = '`' + c.class + '`$1``';
+				c.str = '`' + c.class + '`$1`/`';
 			}
 
 			code = code.replace(c.regex, c.str);
 		}));
-
+		// console.log(code);
 		return code;
 	};
 
@@ -71,8 +71,8 @@ class CodeHighLight {
 	private highlight2 = (regexp: RegExp, code: string = ""): string => {
 		return code
 			.replace(regexp, '')
-			.replace(/([^`]|^)`([^`]+)`/g, '$1<span class="$2">')
-			.replace(/`{2}/g, '</span>');
+			.replace(/`\/`/g, '</span>')
+			.replace(/([^`]|^)`([^`]+)`/g, '$1<span class="$2">');
 	}
 
 	// 行頭のtabをスペースに変換する関数

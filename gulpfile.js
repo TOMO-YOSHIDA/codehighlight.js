@@ -4,16 +4,16 @@ var gulp = require('gulp')
 	, typescript = require('gulp-typescript')
 	, less = require('gulp-less')
 	, uglify = require('gulp-uglify')
-	// , usemin = require('gulp-usemin')
 	, concat = require('gulp-concat')
+	, markdown = require('gulp-markdown')
 	;
 
 
-var jsPath = 'js/**/*.js',
+var jsPath = 'javascript/**/*.ts',
 	tsPath = 'typescript/**/*.ts',
-	tempPath = 'typescript/**/*.json',
 	lessPath = 'css/**/*.less',
-	htmlPath = 'html/**/*.html';
+	htmlPath = 'html/**/*.html',
+	mdPath = '**/*.md';
 
 //plumberはStream中のエラーが原因でタスクが強制停止することを防止するモジュール
 var plumber = require('gulp-plumber'),
@@ -26,27 +26,10 @@ var plumber = require('gulp-plumber'),
 		});
 	};
 
-//bower
-// var mainBowerFiles  = require('main-bower-files');
-// var flatten = require('gulp-flatten');
-// var gulpFilter = require('gulp-filter');
-// var rename = require('gulp-rename')
-// var concat = require('gulp-concat');
-
-
-//typescript
-
+// 出力フォルダのクリーンアップ
 gulp.task('clean', function () {
 	del.sync(['public/**/', 'public/*']);
 });
-//bower_componentsを結合して１つのjsファイルにする
-// gulp.task('bower', function() {
-//   var jsFilter = gulpFilter('**/*.js')
-//   var cssFilter = gulpFilter('**/*.css')
-// 	gulp.src(mainBowerFiles())
-//     .pipe(gulp.dest('public'))
-// 	 ;
-// });
 
 //lessをコンパイルする
 gulp.task('less', function () {
@@ -60,45 +43,47 @@ gulp.task('less', function () {
 gulp.task('html', function () {
 	gulp.src([htmlPath])
 		.pipe(plum())
-		// .pipe(usemin())
 		.pipe(gulp.dest('public'));
 });
 
 //typescriptをコンパイルする
 gulp.task('typescript', function () {
-	del.sync(['public/js/*']);
+	del.sync(['public/js/*', 'public/javascript/*']);
 	// テスト用フルサイズ
 	gulp.src([tsPath])
 		.pipe(plum())
 		.pipe(typescript())
-		.pipe(gulp.dest('public/js'));
-
-	// concat.min.js
-	gulp.src([tsPath])
-		.pipe(plum())
-		.pipe(typescript())
+		.pipe(gulp.dest('public/javascript'))
 		.pipe(concat('codehighlight.min.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('public/js'));
+
+	// ついでにjavascriptのリリースも
+	gulp.src([jsPath])
+		.pipe(plum())
+		.pipe(typescript())
+		.pipe(uglify())
+		.pipe(gulp.dest('public/javascript'));
 });
 
-//jsonデータをコピーする
-gulp.task('json', function () {
-	gulp.src([tempPath])
+gulp.task('markdown', function () {
+	gulp.src(mdPath)
 		.pipe(plum())
-		.pipe(gulp.dest('public/js'));
+		.pipe(markdown())
+		.pipe(gulp.dest('public/'));
 });
 
 //ファイルの更新を監視する
 gulp.task('watch', function () {
 	gulp.watch(tsPath, ['typescript']);
+	gulp.watch(jsPath, ['typescript']);
 	gulp.watch(lessPath, ['less']);
 	gulp.watch(htmlPath, ['html']);
-	gulp.watch(tempPath, ['json']);
+	// gulp.watch(mdPath, ['markdown']);
 });
 
 gulp.task('build', function () {
-	runSequence('clean', ['typescript', 'less', 'html', 'json'])
+	runSequence('clean', ['typescript', 'less', 'html', 'markdown'])
 });
 
 // build & watch
