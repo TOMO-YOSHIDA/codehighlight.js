@@ -1,11 +1,5 @@
 "use strict";
 
-interface httpParam {
-	url: string;
-	callback: (ev: ProgressEvent) => {};
-	method?: string;
-}
-
 interface CodeDefine {
 	class: string;//
 	regex: RegExp;//置換対象正規表現
@@ -19,10 +13,13 @@ interface CodeStructure {
 	define: CodeDefine[];
 }
 
-class CodeHighLight {
-
-	// 超簡易版underscore.js
-	private _ = {
+// 超簡易版underscore.js
+declare var _ : underscore_modoki;
+declare interface underscore_modoki {
+	contains: (a: any[], v: any) => boolean;
+};
++function(g) {
+	g["_"] = g["_"] || {
 		contains: function(a: any[], v: any): boolean {
 			let ret = false;
 			for (let i = a.length; i--;) {
@@ -33,6 +30,10 @@ class CodeHighLight {
 		}
 	};
 
+} (this);
+
+class CodeHighLight {
+
 	//行番号を作成する関数
 	private makeLineNumber = (idx: number) => `<div class="ln">${idx}</div>`;
 
@@ -40,7 +41,7 @@ class CodeHighLight {
 	private sanitizer = (s = "") => s.replace(/^\s*[\r\n]+|[\s\r\n]*$/g, '').replace(/['"<>&`]/g, (c) => `&#${c.charCodeAt(0) };`);
 
 	//変換定義・書体定義を書く
-	private template: CodeStructure[] = [];
+	private static template: CodeStructure[] = [];
 
 	// ハイライト変換(中間コード)
 	private highlight1 = (code: string = "", lang: string = ""): string => {
@@ -52,7 +53,7 @@ class CodeHighLight {
 		code = this.sanitizer(code);
 
 		// templateから対象のdefineリストを抽出
-		let temps = this.template.filter(t => this._.contains(t.alias, lang));
+		let temps = CodeHighLight.template.filter(t => _.contains(t.alias, lang));
 
 		// defineリストごとにcodeを変換する
 		temps.forEach(c => c.define.forEach((c: CodeDefine) => {
@@ -77,12 +78,11 @@ class CodeHighLight {
 
 	// 行頭のtabをスペースに変換する関数
 	private tab2space = (str = ""): string => {
-		return str.replace(/^\t+/, (s) => s.replace(/\t/g, "    "))
+		return str.replace(/^[ \t]+/, (s) => s.replace(/\t/g, "    "))
 	};
 
-	// 公開名はwindow.chl
 	// javascriptをロード・実行する関数
-	public loadTemplate = (url: string): void => {
+	public loadTemplate = (url: string) => {
 		let h = new XMLHttpRequest();
 
 		h.onreadystatechange = function(ev: ProgressEvent) {
@@ -98,25 +98,37 @@ class CodeHighLight {
 	};
 
 	// templateの追加を受け付ける関数
-	public addTemplate = (structure: CodeStructure) => {
+	public static addTemplate = (structure: CodeStructure) => {
 		let added = false;
 
 		// 定義済みの定義体は上書き
-		this.template.forEach((temp, idx) => {
-			if (this._.contains(temp.alias, structure.type)) {
-				this.template.splice(idx, 1, structure);
+		CodeHighLight.template.forEach((temp, idx) => {
+			if (_.contains(temp.alias, structure.type)) {
+				CodeHighLight.template.splice(idx, 1, structure);
 				added = true;
 			}
 		});
 
 		// 新定義なら追加
 		if (!added) {
-			this.template.push(structure);
+			CodeHighLight.template.push(structure);
 		}
 
-		// コード変換を実行
-		this.execute();
+		new CodeHighLight().execute();
 	};
+
+	// テンプレートがあるか？
+	public hasTemplate = (lang: string = "some script"): boolean => {
+		lang = lang.toLowerCase();
+		// 定義済みの定義体は上書き
+		var has = false;
+		CodeHighLight.template.forEach((temp) => {
+			if (_.contains(temp.alias, lang)) {
+				has = true;
+			}
+		});
+		return has;
+	}
 
 	// code highlight実行関数
 	public execute = (target?: NodeListOf<HTMLScriptElement>) => {
@@ -131,6 +143,7 @@ class CodeHighLight {
 			// コードの言語を取得
 			var lang = s.type.split('/')[1];
 			if (!lang) continue; //未定義なら処理しない
+			if (!this.hasTemplate(lang)) continue; // テンプレートがない場合も処理しない
 
 			// titleの作成
 			var title = `<div class="title">${s.title}${lang ? ` / ${lang}` : ''}</div>`;
@@ -168,8 +181,3 @@ class CodeHighLight {
 		}
 	};
 }
-
-// 実行
-!function(g) {
-	g.chl = g.chl || new CodeHighLight();
-} (this);

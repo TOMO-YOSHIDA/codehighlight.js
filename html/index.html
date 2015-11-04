@@ -64,13 +64,37 @@
 		}
 	</script>
 
-	<!--リリース用concat.min.js-->
-	<!--<script src="./js/codehighlight.min.js"></script>-->
+      <script title="IEには関数がないので自作する" type="code/javascript">
+        +function(){
+        	// ここに計測開始時間をキャッシュ
+        	var cache = {};
+
+        	// 計測開始
+        	if(!console.time) {
+        		console.time = function(key){
+        			cache[key] = Date.now();
+        		};
+        	}
+
+        	// 計測終了
+        	if(!console.timeEnd) {
+        		console.timeEnd = function(key){
+        			var end = Date.now();
+        			var start = cache[key];
+        			if(!key) return; // 対応する開始時間がなければ抜ける
+
+        			console.log(end - start + " ms");
+        			delete cache[key]; // キャッシュのお掃除
+        		};
+        	}
+        }();
+
+      </script>
 
 	<!--1つずつ読み込むデバッグ用-->
 	<script src="./javascript/codehighlight.js"></script>
 	<script>
-		chl.loadTemplate('/javascript/define-javascript.js');
+		new CodeHighLight().loadTemplate('/javascript/define-javascript.js');
 	</script>
 
 </body>

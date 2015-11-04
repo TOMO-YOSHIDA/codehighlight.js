@@ -1,16 +1,20 @@
 {
-   "compilerOptions": {
-      "target": "ES5",
-      "module": "commonjs",
-      "noLib": false,
-      "noImplicitAny": true,
-      "removeComments": false,
-      "preserveConstEnums": true,
-      "sourceMap": false
-   },
-   "exclude": [
-      "node_modules",
-      "typings",
-      "wwwroot"
-   ]
+    "compilerOptions": {
+        "target": "ES5",
+        "module": "commonjs",
+        "noLib": false,
+        "noImplicitAny": true,
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "sourceMap": false
+    },
+    "exclude": [
+        "node_modules",
+        "typings",
+        "wwwroot"
+    ],
+    "files": [
+        "typescript/codehighlight.ts",
+        "typescript/define-javascript.ts"
+    ]
 }

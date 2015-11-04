@@ -1,8 +1,7 @@
-declare let chl;
 !function() {
-	chl.addTemplate({
+	CodeHighLight.addTemplate({
 		version: "0.0.1",
-		// ecma
+		type: "ecma",
 		alias: [
 			"js",
 			"javascript",
@@ -37,12 +36,12 @@ declare let chl;
 				class: "keyword",
 				regex: /\b(break|case|catch|continue|debugger|default|delete|do|else|finally|for|function|if|in|instanceof|new|return|switch|this|throw|try|typeof|var|while|with|class|enum|export|extends|import|super|implements|interface|let|package|private|protected|public|static|yield)\b/g
 			},
-			{
-				// 正規表現
-				class: "regexp",
-				regex: /(\/.+?[^\\]\/[gim]*)\b/g
-			},
-
+			// {
+			// 	// 正規表現
+			// 	class: "regexp",
+			// 	// regex: /(\/.+?[^\\]\/[gim]*)\b/g
+			// 	regex: /(\/(?!\\\/)+?\/[gim]*)\b/g
+			// },
 			{
 				// 単一行・行末コメント
 				class: "comment",
@@ -71,7 +70,7 @@ declare let chl;
 			{
 				// プリミティブ
 				class: "premitive",
-				regex: /\b(true|false|NaN|null|undefined|void)\b/g
+				regex: /[^"'\B](true|false|NaN|null|undefined|void)[^"'\B]/g
 			},
 
 			{
