@@ -14,7 +14,9 @@
         "wwwroot"
     ],
     "files": [
-        "typescript/codehighlight.ts",
+        "typescript/Code.ts",
+        "typescript/CodeHighLight.ts",
+        "typescript/TemplateManager.ts",
         "typescript/define-javascript.ts"
     ]
 }

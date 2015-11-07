@@ -16,6 +16,7 @@
     "gulp-typescript": "*"
   },
   "dependencies": {
+    "compression": "^1.6.0",
     "gulp-tsconfig-update": "^1.1.1"
   }
 }

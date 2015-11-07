@@ -17,10 +17,9 @@
 			return this;
 		};
 		a.shuffle(); // -> [5,3,2,4,1]
-
 	</script>
 
-	<script type="code/ECMA" title="hoge.js">
+	<script type="code/ECMAScript" title="hoge.js">
 	<!--
 		/**
 			このセクションのコードに意味はありません！
@@ -29,13 +28,16 @@
 		*/
 		var script = '<script type="text/javascript>',//ダブルクォートがちゃんと閉じていないのを許す->OK
 			scriptEnd = "</" + "script>" // script終了タグの避け方
-		var iyana_yatsu = '<div class="ln">\t</div>\r\n';
+		var iyana_yatsu = '<div class="ln">\t\'</div>\r\n';
 
 		if(script && scriptEnd || 1 < 2) {
 			// &を&amp;にしてもOK!!
 			// &lt;もそのまま出る
 		}
 		window.alert('YEAH!!'); // <-alert実行されないでしょ
+		console.log('');console.log("");
+
+		console.log('//ちゃんと閉じないクォート
 
 		var function1 = function(arg1, arg2){};
 		let fun2fnc = function(a1rg, a2rg){};
@@ -49,13 +51,14 @@
 			`testMojiretsu`.replace(/Mojiretsu/g , 'Strings');
 		}
 	-->
-
 	</script>
 
-	<script type='code/TypeScript' title='数字のテスト'>
-	090.8178.5984
-	a = .3;
-	b = 4.;
+	<script type='code/ES5' title='リテラル・プリミティブのテスト'>
+	let tel ="090.8178.5984";
+	var a = .3, b = 4., c =1, d=1.0, e = 1000*1000;
+	var f=true;var g=false;
+	var h = 2 + 4 /5+6/g;//正規表現に見えるかもしれない計算式
+	var i = +1; var j = -2; var k=+1; var l=-2;
 	</script>
 
 	<script type='code/css' title="cssのサンプル">
@@ -64,7 +67,7 @@
 		}
 	</script>
 
-      <script title="IEには関数がないので自作する" type="code/javascript">
+      <script title="IEには関数がないので自作する" type="code/ES5">
         +function(){
         	// ここに計測開始時間をキャッシュ
         	var cache = {};
@@ -91,11 +94,23 @@
 
       </script>
 
-	<!--1つずつ読み込むデバッグ用-->
-	<script src="./javascript/codehighlight.js"></script>
+
+	<!-- min.js -->
+	<script src="./js/codehighlight.min.js"></script>
 	<script>
-		new CodeHighLight().loadTemplate('/javascript/define-javascript.js');
+		new CHL.CodeHighLight().execute();
 	</script>
+
+	<!-- 1つずつ読み込むデバッグ用 -->
+<!--
+	<script src="./javascript/TemplateManager.js"></script>
+	<script src="./javascript/Code.js"></script>
+	<script src="./javascript/CodeHighLight.js"></script>
+	<script>
+		var chl = new CHL.CodeHighLight();
+		chl.loadTemplate('/javascript/define-javascript.js');
+	</script>
+-->
 
 </body>
 

@@ -1,183 +1,93 @@
 "use strict";
+namespace CHL {
+	export class CodeHighLight {
+		//変換定義・書体定義を書く
+		private static template: CodeStructure[] = [];
 
-interface CodeDefine {
-	class: string;//
-	regex: RegExp;//置換対象正規表現
-	str?: string;//変換後の文字列
-}
+		public constructor() { }
 
-interface CodeStructure {
-	version: string;
-	type: string;//タイプ
-	alias: string[];//別名
-	define: CodeDefine[];
-}
-
-// 超簡易版underscore.js
-declare var _ : underscore_modoki;
-declare interface underscore_modoki {
-	contains: (a: any[], v: any) => boolean;
-};
-+function(g) {
-	g["_"] = g["_"] || {
-		contains: function(a: any[], v: any): boolean {
-			let ret = false;
-			for (let i = a.length; i--;) {
-				ret = ret || a[i] === v;
-				if (ret) break;
-			}
-			return ret;
+		// テンプレートのロード & 再実行
+		public loadTemplate(url: string) {
+			CHL.TemplateManager.loadTemplate(url, () => { this.execute() });
 		}
-	};
+		// テンプレートの追加はTemplateManagerに委譲
+		public static addTemplate(def: CodeStructure) {
+			CHL.TemplateManager.addTemplate(def);
+			// this.execute(); // 連続追加も考慮して即実行はしない
+		};
 
-} (this);
+		// code highlight実行関数
+		public execute(target?: NodeListOf<HTMLScriptElement>) {
+			let scripts = target || document.getElementsByTagName('script');
 
-class CodeHighLight {
+			// scriptsはforEachで回せない、scriptブロックは変換後に削除するので後ろから回す
+			for (let i = scripts.length; i--;) {
+				var s = scripts[i];
 
-	//行番号を作成する関数
-	private makeLineNumber = (idx: number) => `<div class="ln">${idx}</div>`;
+				// 変換対象かをチェック
+				if (!/^code\/.+$/.test(s.type)) continue;
 
-	// サニタイズ実行関数 特定文字を&#0001;形式に変換する
-	private sanitizer = (s = "") => s.replace(/^\s*[\r\n]+|[\s\r\n]*$/g, '').replace(/['"<>&`]/g, (c) => `&#${c.charCodeAt(0) };`);
+				// コードの言語を取得
+				var lang = s.type.split('/')[1];
 
-	//変換定義・書体定義を書く
-	private static template: CodeStructure[] = [];
+				var template: CodeStructure = CHL.TemplateManager.getTemplate(lang);
+				if (!template) continue; // テンプレートがない場合も処理しない
 
-	// ハイライト変換(中間コード)
-	private highlight1 = (code: string = "", lang: string = ""): string => {
+				// titleの作成
+				var title = `<div class="title">${s.title} / ${lang}</div>`;
 
-		// 引数が無効な場合は抜ける(エラー無し)
-		if (!lang || !code) return code;
+				// コードの最初と最後の空白を除去して改行でsplit
+				var lines = s.innerHTML.replace(/^[\s]*\n|[\s\r\n]*$/g, '').split(/[\r\n]/g);
 
-		lang = lang.toLowerCase();
-		code = this.sanitizer(code);
+				// 行の始まりの空白をカウント
+				var mintab = Infinity;
+				lines.forEach((line, i) => {
+					// 行頭のtabをスペースに変換する関数
+					lines[i] = line = line.replace(/^[ \t]+/, function(s) { return s.replace(/\t/g, "    "); });;
+					var indent = /^(\s*)/.exec(line);
+					if (indent[1]) {
+						mintab = Math.min(indent[1].length, mintab);
+					}
+				});
 
-		// templateから対象のdefineリストを抽出
-		let temps = CodeHighLight.template.filter(t => _.contains(t.alias, lang));
+				// 行の始まりを合わせる
+				var rep = new RegExp(`^\\s{${mintab}}|[\s]*$`, 'g');
+				lines.forEach((line, i) => {
+					lines[i] = line.replace(rep, '');
+				});
 
-		// defineリストごとにcodeを変換する
-		temps.forEach(c => c.define.forEach((c: CodeDefine) => {
-			if (!c.regex) throw "Error!! Template.CodeDefine.regex is undefined.";
-			if (!c.str) {
-				c.str = '`' + c.class + '`$1`/`';
+				// やっとcodeオブジェクトに変換
+				var codes = [new Code(lines.join('\n'))];
+
+				// codeのマーキング
+				template.define.forEach(function(def) {
+					var ret: Code[] = [];
+					codes.forEach(function(code) {
+						code.markCodeAndStore(def, ret);
+					});
+
+					// flatten code. タグ無しのコード同士は連結
+					codes = Code.flatten(ret);
+				});
+
+				// 行番号リストを作成
+				var numbers = "", cnt = 0;
+				lines.forEach(function() {
+					numbers += `<div>${++cnt}</div>`;
+				});
+
+				// // 整形リストelementの生成
+				var newTag = document.createElement('div');
+				newTag.setAttribute('class', 'chl');
+				newTag.setAttribute('title', s.title);
+				newTag.innerHTML = title + '<code><div class="no">' + numbers + '</div><div class="code"><div>' + codes.join('') + '</div></div></code>';
+
+				// 親に追加
+				s.parentElement.insertBefore(newTag, s);
+
+				// もともとのscriptブロックは削除
+				s.remove();
 			}
-
-			code = code.replace(c.regex, c.str);
-		}));
-		// console.log(code);
-		return code;
-	};
-
-	// 中間コードを最終コードに変換
-	private highlight2 = (regexp: RegExp, code: string = ""): string => {
-		return code
-			.replace(regexp, '')
-			.replace(/`\/`/g, '</span>')
-			.replace(/([^`]|^)`([^`]+)`/g, '$1<span class="$2">');
+		};
 	}
-
-	// 行頭のtabをスペースに変換する関数
-	private tab2space = (str = ""): string => {
-		return str.replace(/^[ \t]+/, (s) => s.replace(/\t/g, "    "))
-	};
-
-	// javascriptをロード・実行する関数
-	public loadTemplate = (url: string) => {
-		let h = new XMLHttpRequest();
-
-		h.onreadystatechange = function(ev: ProgressEvent) {
-			if (h.readyState === 4 && h.status === 200) {
-
-				let s = document.createElement('script');
-				s.innerHTML = h.responseText;
-				document.body.appendChild(s);
-			}
-		}
-		h.open('GET', url, true);
-		h.send(null);
-	};
-
-	// templateの追加を受け付ける関数
-	public static addTemplate = (structure: CodeStructure) => {
-		let added = false;
-
-		// 定義済みの定義体は上書き
-		CodeHighLight.template.forEach((temp, idx) => {
-			if (_.contains(temp.alias, structure.type)) {
-				CodeHighLight.template.splice(idx, 1, structure);
-				added = true;
-			}
-		});
-
-		// 新定義なら追加
-		if (!added) {
-			CodeHighLight.template.push(structure);
-		}
-
-		new CodeHighLight().execute();
-	};
-
-	// テンプレートがあるか？
-	public hasTemplate = (lang: string = "some script"): boolean => {
-		lang = lang.toLowerCase();
-		// 定義済みの定義体は上書き
-		var has = false;
-		CodeHighLight.template.forEach((temp) => {
-			if (_.contains(temp.alias, lang)) {
-				has = true;
-			}
-		});
-		return has;
-	}
-
-	// code highlight実行関数
-	public execute = (target?: NodeListOf<HTMLScriptElement>) => {
-		let scripts = target || document.getElementsByTagName('script');
-		// scriptsはforEachで回せない、scriptブロックは返還後に削除するので後ろから回す
-		for (let i = scripts.length; i--;) {
-			let s = scripts[i];
-
-			// 変換対象かをチェック
-			if (!/^code/.test(s.type)) continue;
-
-			// コードの言語を取得
-			var lang = s.type.split('/')[1];
-			if (!lang) continue; //未定義なら処理しない
-			if (!this.hasTemplate(lang)) continue; // テンプレートがない場合も処理しない
-
-			// titleの作成
-			var title = `<div class="title">${s.title}${lang ? ` / ${lang}` : ''}</div>`;
-
-			// codeを取得・サニタイズ・最初と最後の空行を削除
-			var codelist = this.highlight1(s.innerHTML, lang);
-
-			// 行の始まりの空白をカウント
-			var lines = codelist.split(/[\r\n]+/g);
-			var mintab = Infinity;
-			lines.forEach((line, i) => {
-				lines[i] = line = this.tab2space(line);
-				let indent = /^(\s*)/.exec(line);
-				if (indent[1]) {
-					mintab = Math.min(indent[1].length, mintab);
-				}
-			});
-
-			// 行の始まりを合わせる
-			var rep = new RegExp(`^\\s{${mintab}}`);
-			lines.forEach((line, i) => {
-				lines[i] = this.makeLineNumber(i + 1) + this.highlight2(rep, line);
-			});
-
-			// 整形リストelementの生成
-			let newTag = document.createElement('pre');
-			newTag.setAttribute('class', 'code highlight');
-			newTag.innerHTML = title + '<code>' + lines.join('<br>') + '</code>';
-
-			// 親に追加
-			s.parentElement.insertBefore(newTag, s);
-
-			// もともとのscriptブロックは削除
-			s.remove();
-		}
-	};
 }

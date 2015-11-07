@@ -1,5 +1,6 @@
 // base
 @bg-color:#FEFEFE;
+@border-color:#F3F3F3;
 @color:#333;
 // title
 @title-bg:#666;
@@ -20,6 +21,9 @@
 //リテラル(文字列、数字など)
 @literal:@premitive;
 
+//ビルトイン関数など
+@builtin:@keyword;
+
 //正規表現
 @regexp:@premitive;
 
@@ -27,38 +31,33 @@
 @shadow-color:#666;
 @shadow:1px 1px 2px @shadow-color;
 
-pre.code.highlight {
-	margin: 0.5em;
+.chl {
+	margin: 0.5em 0;
 	border:1px solid @color;
 	box-shadow:@shadow;
 	background: @bg-color;
 	color:@color;
 	overflow:none;
 
-	code {
-		display:block;
-		overflow:auto;
+	div, code, pre {
+		font-family:"Source Han Code JP" "Source Code Pro" "Meiryo" "MS GOTHIC" sans-serif;
+		font-size:1em;
+		margin:0;
 	}
 
-	div, code {
-		font-family:"Source Han Code JP" "Source Code Pro" "MS GOTHIC" "Meiryo" "Hiragino Kaku Gothic ProN W3" sans-serif mono-space;
-		font-size:9pt;
-		line-height: 1.2;
-	}
-
-	div.title {
+	.title {
 		background:@title-bg;
 		color:@title-color;
 		padding:2px 6px;
 		margin:0;
 	}
-	// 下に行くほど強い
 	.premitive {
 		color:@premitive;
-		font-weight:bold;
+		// font-weight:bold;
 	}
 
 	.keyword{
+		font-weight:bold;
 		color:@keyword;
 	}
 
@@ -72,30 +71,46 @@ pre.code.highlight {
 
 	.literal {
 		color:@literal;
-		* {
-			// literal内のkeywordとかは無視
-			color:@literal;
-		}
+	}
+
+	.builtin {
+		color:@builtin;
 	}
 
 	.comment {
 		color:@comment-color;
 		font-weight: normal;
-		* {
-			// comment内のliteralやkeywordは無視
-			color:@comment-color;
-			font-weight: normal;
-		}
 	}
 
-	//行番号
-	.ln{
-		display: inline-block;
-		width:2em;
-		text-align: right;
-		padding-right:0.5em;
-		margin-right:1em;
-		color:@color;
-		border-right:3px solid @shadow-color; //コードとの境界線
+	code {
+		display:flex;
+
+		.no,.code {
+			div {
+				white-space: pre;
+				&:nth-child(2n){
+					background:@border-color;
+				}
+			}
+		}
+
+		.no {
+			text-align:right;
+			border-right:3px solid @title-bg;
+			div {
+				padding:0 0.4em;
+				&:after {
+					content: ":";
+				}
+			}
+		}
+
+		.code {
+			flex-grow: 1;// 画面いっぱい使う
+			overflow:auto;
+			div {
+				padding:0 1em;
+			}
+		}
 	}
 }

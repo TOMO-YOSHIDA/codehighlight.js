@@ -15,6 +15,11 @@ var jsPath = 'javascript/**/*.ts',
 	lessPath = 'css/**/*.less',
 	htmlPath = 'html/**/*.html';
 
+var tsSetting = {
+	target: "ES5",
+	sortOutput: false
+}
+
 //plumberはStream中のエラーが原因でタスクが強制停止することを防止するモジュール
 var plumber = require('gulp-plumber'),
 	plum = function () {
@@ -53,16 +58,16 @@ gulp.task('typescript', function () {
 	gulp.src(tsPath)
 		.pipe(tsconfig())
 		.pipe(plum())
-		.pipe(typescript())
+		.pipe(typescript(tsSetting))
 		.pipe(gulp.dest('public/javascript'))
 		.pipe(concat('codehighlight.min.js'))
-		.pipe(uglify())
+		// .pipe(uglify())
 		.pipe(gulp.dest('public/js'));
 
 	// ついでにjavascriptのリリースも
 	gulp.src(jsPath)
 		.pipe(plum())
-		.pipe(typescript())
+		.pipe(typescript(tsSetting))
 		.pipe(uglify())
 		.pipe(gulp.dest('public/javascript'));
 });
@@ -82,6 +87,7 @@ gulp.task('dist', function () {
 		.pipe(gulp.dest('public/dist'));
 
 	gulp.src('public/js/codehighlight.min.js')
+		.pipe(uglify())
 		.pipe(gulp.dest('public/dist'));
 });
 
