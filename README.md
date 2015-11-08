@@ -3,6 +3,9 @@
 ## 概要
 `<script type="code/hoge">〜</script>`で囲われた範囲をいい具合に整形して表示する。
 
+## install
+`bower install codehighlight.js`
+
 ## 特徴
 ### 良い特徴
 * コード中に`<`,`>`やHTMLタグが出現してもOK

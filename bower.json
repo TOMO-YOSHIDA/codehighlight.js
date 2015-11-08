@@ -1,6 +1,6 @@
 {
   "name": "codehighlight.js",
-  "version": "v0.1.0",
+  "version": "0.1.0",
   "main":[
      "public/dist/codehighlight.min.js",
      "public/dist/codehighlight.min.css"
