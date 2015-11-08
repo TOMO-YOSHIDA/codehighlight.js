@@ -1,5 +1,6 @@
 *.js
 !gulpfile.js
+!codehighlight.min.js
 /public
 /node_modules
 /typings
