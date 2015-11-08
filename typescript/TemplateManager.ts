@@ -6,8 +6,7 @@ interface CodeDefine {
 
 interface CodeStructure {
 	version: string;
-	type: string;//タイプ
-	alias: RegExp;//別名
+	lang: RegExp;
 	define: CodeDefine[];
 }
 
@@ -51,7 +50,7 @@ namespace CHL {
 
 			// 定義済みの定義体は上書き
 			TemplateManager.templates.forEach((temp, idx) => {
-				if (temp.alias.test(structure.type)) {
+				if (temp.lang === structure.lang) {
 					TemplateManager.templates.splice(idx, 1, structure);
 					added = true;
 				}
@@ -64,12 +63,14 @@ namespace CHL {
 		};
 
 		// テンプレートがあるか？
-		public static getTemplate(lang: string = "some script"): CodeStructure {
-			lang = lang.toLowerCase();
-			let contains = TemplateManager.contains;
+		public static getTemplate(lang: string): CodeStructure {
+			if (!lang) return null;
 
+			lang = lang.toLowerCase();
+
+			// 見つかった時点でreturn するためforEachは使わない
 			for (let i = TemplateManager.templates.length; i--;) {
-				if (TemplateManager.templates[i].alias.test(lang)) {
+				if (TemplateManager.templates[i].lang.test(lang)) {
 					return TemplateManager.templates[i];
 				}
 			}

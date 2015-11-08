@@ -1,7 +1,6 @@
 CHL.CodeHighLight.addTemplate({
 	version: "0.0.1",
-	type: "ecma",
-	alias: /^(?:js|javascript|ecma(?:script)?\d*|es\d*|ts|typescript)$/i,
+	lang: /^(?:js|javascript|ecma(?:script)?\d*|es\d*|ts|typescript)$/i,
 	define: [
 		{
 			/* 複数行コメント */

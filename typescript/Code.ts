@@ -1,7 +1,7 @@
 "use strict";
 namespace CHL {
 	export class Code {
-		private static M = "@__@@";
+		public static M = "@__@@";
 
 		// tag
 		public tag: string = void 0;
@@ -45,13 +45,15 @@ namespace CHL {
 
 			// 例："var a = 1;" 基本はstringのまま扱う
 
-			// 特定のキーワードをMARKERで区切る
+			// キーワード変換用。def.strが宣言されていなければ`$1`
 			let repstr = (def.str || '`$1`').replace(/`/g, Code.M);
 
-			// 例："`var` a = 1;" にする
+			// 特定のキーワードをMARKER付きに変換する
+			// 例："`var` a = 1;"
 			let temp = this.code.replace(def.regex, repstr);
 
-			// 例：["`var`", "a = 1;"] にする
+			// キーワードとそれ以外を独立したcodeに分割する
+			// 例：["`var`", "a = 1;"]
 			let lines = temp.split(/(@__@@[\w\W]+?@__@@)/);
 
 			// string[] -> Code[]
