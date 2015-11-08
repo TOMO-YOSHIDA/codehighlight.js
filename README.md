@@ -32,7 +32,8 @@
 </script>
 ```
 
-### ハイライト用定義ファイル.JSON
+### ハイライト用定義ファイル.ts
+typescriptで書くと構造がマッチしていないと怒られるので下記を`typescript/defeins/javascript.ts`を参考に。
 * version:バージョン
 * lang:プログラム言語にヒットするための正規表現
 * defines:定義リスト
