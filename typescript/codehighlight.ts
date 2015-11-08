@@ -34,14 +34,14 @@ namespace CHL {
 				if (!template) continue; // テンプレートがない場合も処理しない
 
 				// titleの作成
-				var title = `<div class="title">${s.title} / ${lang}</div>`;
+				var title = `<div class="title">${s.title ? `${s.title} / ` : ''}${lang}</div>`;
 
 				// コードの最初と最後の空白を除去して改行でsplit
 				var lines = s.innerHTML.replace(/^[\s]*\n|[\s\r\n]*$/g, '').split(/[\r\n]/g);
 
 				// 行の始まりの空白をカウント
 				var mintab = Infinity;
-				lines.forEach((line, i) => {
+				lines.forEach(function(line, i) {
 					// 行頭のtabをスペースに変換する関数
 					lines[i] = line = line.replace(/^[ \t]+/, function(s) { return s.replace(/\t/g, "    "); });;
 					var indent = /^(\s*)/.exec(line);
@@ -52,7 +52,7 @@ namespace CHL {
 
 				// 行の始まりを合わせる
 				var rep = new RegExp(`^\\s{${mintab}}|[\s]*$`, 'g');
-				lines.forEach((line, i) => {
+				lines.forEach(function(line, i) {
 					lines[i] = line.replace(rep, '');
 				});
 

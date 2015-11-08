@@ -8,7 +8,7 @@
 	<!-- PlayGroundではjQueryをロードしていますが、codehighlight.jsには必須ではありません。 -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-	<link rel="stylesheet" href="./dist/codehighlight.css">
+	<link rel="stylesheet" href="./dist/codehighlight.min.css">
 	<style>
 		html{
 			height:100%;
@@ -51,33 +51,8 @@
 	};
 	// -> HELLO, codehighlight.js!
 </textarea>
-
-		<script src="./js/codehighlight.min.js"></script>
-
-		<script>
-			"use strict";
-			$(function() {
-
-				$('button').on('click', function() {
-					// すでに表示しているhighlightコードは削除
-					$('.chl').remove();
-
-					var codetype = $('select.code-type').val();
-
-					var script = $('<script>')
-						.attr('type', `code/${codetype}`)
-						.attr('title', `sample code`);
-
-					$('body').append(script);
-
-					script.html($('textarea').val());
-
-					new CHL.CodeHighLight().execute();
-				});
-
-				$('button').click();
-			});
-		</script>
+		<script src="./dist/codehighlight.min.js"></script>
+		<script src="./playground.js"></script>
 </body>
 
 </html>

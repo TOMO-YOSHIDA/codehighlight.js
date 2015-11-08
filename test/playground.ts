@@ -1,13 +1,13 @@
 /// <reference path="../typings/jquery/jquery.d.ts" />
 "use strict";
 
-declare var chl;
+declare var CHL;
 
 $(() => {
 
 	$('button').on('click', () => {
 		// すでに表示しているhighlightコードは削除
-		$('pre.code.highlight').remove();
+		$('.chl').remove();
 
 		let codetype = $('select.code-type').val();
 
@@ -19,7 +19,7 @@ $(() => {
 
 		script.html($('textarea').val());
 
-		chl.execute();
+		new CHL.CodeHighLight().execute();
 	});
 
 	$('button').click();

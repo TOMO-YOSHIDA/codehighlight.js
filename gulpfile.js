@@ -10,14 +10,12 @@ var gulp = require('gulp')
 	;
 
 
-var jsPath = 'javascript/**/*.ts',
-	tsPath = 'typescript/**/*.ts',
-	lessPath = 'css/**/*.less',
-	htmlPath = 'html/**/*.html';
+var tsPath = 'typescript/**/*.ts',
+	lessPath = 'css/**/*.less';
 
 var tsSetting = {
 	target: "ES5",
-	sortOutput: false
+	sortOutput: true
 }
 
 //plumberはStream中のエラーが原因でタスクが強制停止することを防止するモジュール
@@ -41,58 +39,49 @@ gulp.task('less', function () {
 	gulp.src(lessPath)
 		.pipe(plum())
 		.pipe(less())
-		.pipe(gulp.dest('public/css'));
+		.pipe(gulp.dest('public/css'))
+		.pipe(concat('codehighlight.min.css'))
+		.pipe(minifycss())
+		.pipe(gulp.dest('public/dist'));
 });
 
 //htmlを出力先にコピーする
 gulp.task('html', function () {
-	gulp.src(htmlPath)
-		.pipe(plum())
+	gulp.src('test/**/*.html')
 		.pipe(gulp.dest('public'));
 });
 
 //typescriptをコンパイルする
 gulp.task('typescript', function () {
-	del.sync(['public/js/*', 'public/javascript/*']);
-	// テスト用フルサイズ
+	// no compress
 	gulp.src(tsPath)
 		.pipe(tsconfig())
 		.pipe(plum())
 		.pipe(typescript(tsSetting))
-		.pipe(gulp.dest('public/javascript'))
+		.pipe(gulp.dest('public/js'))
+		.pipe(concat('codehighlight.all.js'))
+		.pipe(gulp.dest('public/js'))
 		.pipe(concat('codehighlight.min.js'))
-		// .pipe(uglify())
-		.pipe(gulp.dest('public/js'));
+		.pipe(uglify())
+		.pipe(gulp.dest('public/dist'));
 
 	// ついでにjavascriptのリリースも
-	gulp.src(jsPath)
+	gulp.src('test/**/*.ts')
 		.pipe(plum())
 		.pipe(typescript(tsSetting))
 		.pipe(uglify())
-		.pipe(gulp.dest('public/javascript'));
+		.pipe(gulp.dest('public'));
 });
 
 //ファイルの更新を監視する
 gulp.task('watch', function () {
-	gulp.watch(tsPath, ['typescript']);
-	gulp.watch(jsPath, ['typescript']);
-	gulp.watch(lessPath, ['less']);
-	gulp.watch(htmlPath, ['html']);
-});
-
-// for bower.json
-gulp.task('dist', function () {
-	gulp.src('public/css/codehighlight.css')
-		.pipe(minifycss())
-		.pipe(gulp.dest('public/dist'));
-
-	gulp.src('public/js/codehighlight.min.js')
-		.pipe(uglify())
-		.pipe(gulp.dest('public/dist'));
+	gulp.watch('**/*.ts', ['typescript']);
+	gulp.watch('**/*.less', ['less']);
+	gulp.watch('test/**/*.html', ['html']);
 });
 
 gulp.task('build', function () {
-	runSequence('clean', ['typescript', 'less', 'html', 'dist'])
+	runSequence('clean', ['typescript', 'less', 'html'])
 });
 
 // build & watch

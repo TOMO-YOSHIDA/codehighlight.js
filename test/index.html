@@ -53,7 +53,8 @@
 	-->
 	</script>
 
-	<script type='code/ES5' title='リテラル・プリミティブのテスト'>
+	<script type='code/JS'>
+	// title属性なしのコード。リテラル表記のテスト
 	let tel ="090.8178.5984";
 	var a = .3, b = 4., c =1, d=1.0, e = 1000*1000;
 	var f=true;var g=false;
@@ -96,19 +97,19 @@
 
 
 	<!-- min.js -->
-	<script src="./js/codehighlight.min.js"></script>
+	<script src="./js/codehighlight.all.js"></script>
 	<script>
 		new CHL.CodeHighLight().execute();
 	</script>
 
 	<!-- 1つずつ読み込むデバッグ用 -->
 <!--
-	<script src="./javascript/TemplateManager.js"></script>
-	<script src="./javascript/Code.js"></script>
-	<script src="./javascript/CodeHighLight.js"></script>
+	<script src="./js/TemplateManager.js"></script>
+	<script src="./js/Code.js"></script>
+	<script src="./js/CodeHighLight.js"></script>
 	<script>
 		var chl = new CHL.CodeHighLight();
-		chl.loadTemplate('/javascript/define-javascript.js');
+		chl.loadTemplate('/js/defines/javascript.js');
 	</script>
 -->
 
