@@ -2,12 +2,7 @@
   "name": "codehighlight.js",
   "version": "0.0.1",
   "main":[
-     "public/dist/codehighlight.min.js",
-     "public/dist/codehighlight.min.css"
-  ],
-  "ignore": [
-     "**/.*",
-     "node_modules",
-     "bower_components"
+     "dist/codehighlight.min.js",
+     "dist/codehighlight.min.css"
   ]
 }

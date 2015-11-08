@@ -42,6 +42,7 @@ gulp.task('less', function () {
 		.pipe(gulp.dest('public/css'))
 		.pipe(concat('codehighlight.min.css'))
 		.pipe(minifycss())
+		.pipe(gulp.dest('dist'))
 		.pipe(gulp.dest('public/dist'));
 });
 
@@ -63,7 +64,9 @@ gulp.task('typescript', function () {
 		.pipe(gulp.dest('public/js'))
 		.pipe(concat('codehighlight.min.js'))
 		.pipe(uglify())
+		.pipe(gulp.dest('dist'))
 		.pipe(gulp.dest('public/dist'));
+
 
 	// ついでにjavascriptのリリースも
 	gulp.src('test/**/*.ts')
