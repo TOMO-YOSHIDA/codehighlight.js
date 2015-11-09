@@ -29,11 +29,18 @@
 
 ### 書き方の例:
 ```
-<script type="code/javascript">
+<script type="code/javascript" title="sample code">
 	var a  = [1,2,3];
 	console.log(a);
 </script>
 ```
+<script type="code/javascript" title="sample code">
+	var a  = [1,2,3];
+	console.log(a);
+</script>
+<link rel="text/css" href="dist/codehighlight.min.css"></link>
+<script src="dist/codehighlight.min.js"></script>
+<script>CodeHighlight.execute()</script>
 
 ### ハイライト用定義ファイル.ts
 typescriptで書くと構造がマッチしていないと怒られるので`typescript/define/javascript.ts`を参考に。
@@ -43,3 +50,7 @@ typescriptで書くと構造がマッチしていないと怒られるので`typ
 	+ class:表示用cssクラス
 	+ regex:マーク条件
 	+ str:変換用文字列の定義(default:\`$1\`)
+
+
+## bugs
+* 文字列の中にコメントがあるとコメントとして扱われる

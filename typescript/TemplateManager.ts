@@ -1,8 +1,10 @@
 namespace CodeHighlight {
+
 	export interface CodeDefine {
 		class: string;//
 		regex: RegExp;//置換対象正規表現
 		str?: string;//変換後の文字列
+		fnc?: (v: string, ...args: any[]) => string;
 	}
 
 	export interface CodeStructure {

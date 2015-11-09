@@ -5,13 +5,17 @@ namespace CodeHighlight {
 
 		// tag
 		public tag: string = void 0;
+		public replaced = false;
 
 		// コンストラクタでcodeを保持
-		constructor(private code: string, cls?: string) {
+		constructor(private code: string, def?: CodeDefine) {
 			// 変換対象の場合、tagをつける
 			if (/@__@@/.test(code)) {
 				this.code = code.replace(/@__@@/g, '');
-				this.tag = cls;
+				this.tag = def.class;
+				if (def.fnc) {
+					this.replaced = true;
+				}
 			}
 		}
 
@@ -19,6 +23,10 @@ namespace CodeHighlight {
 		public toString(): string {
 
 			var s = this.code;
+
+			if(this.replaced) {
+				return s;
+			}
 
 			// サニタイズ
 			s = s.replace(/['"<>&`]/g, function(c) {
@@ -45,12 +53,16 @@ namespace CodeHighlight {
 
 			// 例："var a = 1;" 基本はstringのまま扱う
 
-			// キーワード変換用。def.strが宣言されていなければ`$1`
-			let repstr = (def.str || '`$1`').replace(/`/g, Code.M);
-
 			// 特定のキーワードをMARKER付きに変換する
 			// 例："`var` a = 1;"
-			let temp = this.code.replace(def.regex, repstr);
+			let temp: string;
+			if (def.fnc) {
+				temp = this.code.replace(def.regex, def.fnc);
+			} else {
+				// キーワード変換用。def.strが宣言されていなければ`$1`
+				let repstr = (def.str || '`$1`').replace(/`/g, Code.M);
+				temp = this.code.replace(def.regex, repstr);
+			}
 
 			// キーワードとそれ以外を独立したcodeに分割する
 			// 例：["`var`", "a = 1;"]
@@ -58,7 +70,7 @@ namespace CodeHighlight {
 
 			// string[] -> Code[]
 			lines.forEach(function(line) {
-				ret.push(new Code(line, def.class));
+				ret.push(new Code(line, def));
 			})
 		}
 
