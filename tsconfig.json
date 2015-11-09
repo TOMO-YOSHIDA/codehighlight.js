@@ -15,8 +15,8 @@
     ],
     "files": [
         "typescript/Code.ts",
-        "typescript/CodeHighLight.ts",
+        "typescript/Main.ts",
         "typescript/TemplateManager.ts",
-        "typescript/defines/javascript.ts"
+        "typescript/define/javascript.ts"
     ]
 }

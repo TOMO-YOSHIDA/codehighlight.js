@@ -1,5 +1,5 @@
 "use strict";
-namespace CHL {
+namespace CodeHighlight {
 	export class Code {
 		public static M = "@__@@";
 

@@ -21,7 +21,7 @@
 * 表示させたいコードを`script`タグでかこむ
 * `type`属性は"code/javascript"の様に書く
 * codehighlight.jsをロード
-* ページの最後で`new CHL.CodeHighLight().execute();`を実行
+* ページの最後で`CodeHighlight.execute();`を実行
 * コード中に`</script>`が出現するとそこで終わってしまいます。<br>
 `"<" + "/script>"`<br>
 の様に、なんとか終了タグにならないように書いてください。
@@ -36,8 +36,8 @@
 ```
 
 ### ハイライト用定義ファイル.ts
-typescriptで書くと構造がマッチしていないと怒られるので下記を`typescript/defeins/javascript.ts`を参考に。
-* version:バージョン
+typescriptで書くと構造がマッチしていないと怒られるので`typescript/define/javascript.ts`を参考に。
+* version:バージョン(未使用)
 * lang:プログラム言語にヒットするための正規表現
 * defines:定義リスト
 	+ class:表示用cssクラス

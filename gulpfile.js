@@ -6,9 +6,9 @@ var gulp = require('gulp')
 	, less = require('gulp-less')
 	, uglify = require('gulp-uglify')
 	, concat = require('gulp-concat')
+	, autoprefix = require('gulp-autoprefixer')
 	, minifycss = require('gulp-minify-css')
 	;
-
 
 var tsPath = 'typescript/**/*.ts',
 	lessPath = 'css/**/*.less';
@@ -39,47 +39,39 @@ gulp.task('less', function () {
 	gulp.src(lessPath)
 		.pipe(plum())
 		.pipe(less())
-		.pipe(gulp.dest('public/css'))
+		.pipe(autoprefix())
+		.pipe(gulp.dest('public'))
 		.pipe(concat('codehighlight.min.css'))
 		.pipe(minifycss())
 		.pipe(gulp.dest('dist'))
-		.pipe(gulp.dest('public/dist'));
+		.pipe(gulp.dest('public'));
 });
 
 //htmlを出力先にコピーする
 gulp.task('html', function () {
-	gulp.src('test/**/*.html')
+	gulp.src('test/**')
 		.pipe(gulp.dest('public'));
 });
 
 //typescriptをコンパイルする
 gulp.task('typescript', function () {
-	// no compress
 	gulp.src(tsPath)
 		.pipe(tsconfig())
 		.pipe(plum())
 		.pipe(typescript(tsSetting))
 		.pipe(gulp.dest('public/js'))
-		.pipe(concat('codehighlight.all.js'))
-		.pipe(gulp.dest('public/js'))
+		.pipe(concat('codehighlight.js'))
+		.pipe(gulp.dest('public'))
 		.pipe(concat('codehighlight.min.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('dist'))
-		.pipe(gulp.dest('public/dist'));
-
-
-	// ついでにjavascriptのリリースも
-	gulp.src('test/**/*.ts')
-		.pipe(plum())
-		.pipe(typescript(tsSetting))
-		.pipe(uglify())
 		.pipe(gulp.dest('public'));
 });
 
 //ファイルの更新を監視する
 gulp.task('watch', function () {
-	gulp.watch('**/*.ts', ['typescript']);
-	gulp.watch('**/*.less', ['less']);
+	gulp.watch(tsPath, ['typescript']);
+	gulp.watch(lessPath, ['less']);
 	gulp.watch('test/**/*.html', ['html']);
 });
 
