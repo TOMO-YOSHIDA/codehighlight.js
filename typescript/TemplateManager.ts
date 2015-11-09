@@ -1,31 +1,22 @@
-interface CodeDefine {
-	class: string;//
-	regex: RegExp;//置換対象正規表現
-	str?: string;//変換後の文字列
-}
+namespace CodeHighlight {
+	export interface CodeDefine {
+		class: string;//
+		regex: RegExp;//置換対象正規表現
+		str?: string;//変換後の文字列
+	}
 
-interface CodeStructure {
-	version: string;
-	lang: RegExp;
-	define: CodeDefine[];
-}
+	export interface CodeStructure {
+		version: string;
+		lang: RegExp;
+		define: CodeDefine[];
+	}
 
-namespace CHL {
 	export class TemplateManager {
-
-		private static contains(a: any[], v: any): boolean {
-			let ret = false;
-			for (let i = a.length; i--;) {
-				ret = ret || a[i] === v;
-				if (ret) break;
-			}
-			return ret;
-		};
 
 		public static templates: CodeStructure[] = [];
 
 		// javascriptをロード・実行する関数
-		public static loadTemplate = (url: string, callback?: Function) => {
+		public static loadTemplate(url: string) {
 			let h = new XMLHttpRequest();
 
 			h.onreadystatechange = function(ev: ProgressEvent) {
@@ -35,8 +26,7 @@ namespace CHL {
 					s.innerHTML = h.responseText;
 					document.body.appendChild(s);
 
-					if (typeof callback === 'function')
-						callback();
+					CodeHighlight.execute();
 				}
 			}
 			h.open('GET', url, true);
@@ -44,8 +34,7 @@ namespace CHL {
 		};
 
 		// templateの追加を受け付ける関数
-		public static addTemplate = (structure: CodeStructure) => {
-			let contains = TemplateManager.contains;
+		public static addTemplate(structure: CodeStructure) {
 			let added = false;
 
 			// 定義済みの定義体は上書き

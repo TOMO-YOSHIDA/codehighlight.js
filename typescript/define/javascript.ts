@@ -1,4 +1,4 @@
-CHL.CodeHighLight.addTemplate({
+CodeHighlight.addTemplate({
 	version: "0.0.1",
 	lang: /^(?:js|javascript|ecma(?:script)?\d*|es\d*|ts|typescript)$/i,
 	define: [
