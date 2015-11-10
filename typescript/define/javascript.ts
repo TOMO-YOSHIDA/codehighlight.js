@@ -1,29 +1,12 @@
 CodeHighlight.addTemplate({
 	version: "0.0.1",
 	lang: /^(?:js|javascript|ecma(?:script)?\d*|es\d*|ts|typescript)$/i,
-	define: [
-		{
-			/* 複数行コメント */
-			class: "comment",
-			regex: /(\/\*[\w\W]+?\*\/)/g
-		},
-		{
-			// 単一行・行末コメント
-			class: "comment",
-			regex: /(\/\/.*?)([\r\n]+|$)/g,
-			str: "`$1`$2"
-		},
-		{
-			// 文字列リテラル
-			class: "literal",
-			regex: /(['"`])(.*?[^\\]\1)/g,
-			str: "`$1$2`"
-		},
+	defAsCode: [
 		{
 			// 数字リテラル
 			class: "premitive",
 			regex: /([\W])([+\-]?[\d\.]+)/g,
-			str:"$1`$2`"
+			str: "$1`$2`"
 		},
 		{
 			// 正規表現
@@ -43,7 +26,30 @@ CodeHighlight.addTemplate({
 		{
 			// ビルトイン関数など
 			class: "builtin",
-			regex:/\b(escape|eval|isFinite|isNaN|parseFloat|parseInt|unescape|Array|Boolean|Date|Error|EvalError|Function|JSON|Math|Number|Object|RegExp|ReferenceError|RangeError|String|SyntaxError|TypeError|URIError|console|debugger)\b/g
+			regex: /\b(escape|eval|isFinite|isNaN|parseFloat|parseInt|unescape|Array|Boolean|Date|Error|EvalError|Function|JSON|Math|Number|Object|RegExp|ReferenceError|RangeError|String|SyntaxError|TypeError|URIError|console|debugger)\b/g
 		}
+	],
+	defNoCode: [
+		{
+			/* 複数行コメント */
+			class: "comment",
+			start: /\/\*/,
+			regex: /(\/\*[\w\W]+?\*\/)/
+		},
+		{
+			// 単一行コメント
+			class: "comment",
+			start: /\/\//,
+			regex: /(\/\/.*?)([\r\n]+|$)/,
+			str: "`$1`$2"
+		},
+		{
+			// 文字列
+			class: "literal",
+			escape: '\\',
+			start: /['"`]/,
+			regex: /(['"`])(.*?[^\\]\1)/,
+			str: "`$1$2`"
+		},
 	]
 });

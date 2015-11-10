@@ -13,7 +13,7 @@ namespace CodeHighlight {
 	};
 
 	// code highlight実行関数
-	export function execute(scripts?: NodeListOf<HTMLScriptElement>|NodeListOf<HTMLPhraseElement>) {
+	export function execute(scripts?: NodeListOf<HTMLScriptElement> | NodeListOf<HTMLPhraseElement>) {
 		if (scripts) {
 			CodeHighlight.highlight(scripts);
 		} else {
@@ -22,7 +22,7 @@ namespace CodeHighlight {
 		}
 	}
 
-	export function highlight(scripts?: NodeListOf<HTMLScriptElement>|NodeListOf<HTMLPhraseElement>){
+	export function highlight(scripts?: NodeListOf<HTMLScriptElement> | NodeListOf<HTMLPhraseElement>) {
 
 		// scriptsはforEachで回せない、scriptブロックは変換後に削除するので後ろから回す
 		for (let i = scripts.length; i--;) {
@@ -42,11 +42,8 @@ namespace CodeHighlight {
 			// titleの作成
 			var title = `<div class="title">${s.title ? `${s.title} / ` : ''}${lang}</div>`;
 
-			if(lang==="html")
-			console.log('inner:' + s.innerHTML);
-
-			// コードの最初と最後の空白を除去して改行でsplit
-			var lines = s.innerHTML.replace(/^[\s]*\n|[\s\r\n]*$/g, '').split(/[\r\n]/g);
+			// CrLf -> Lf, コードの最初と最後の空白を除去して改行でsplit
+			var lines = s.innerHTML.replace(/^[\s]*?\n|\r|[\s\r\n]*$/g, '').split(/\n/g);
 
 			// 行の始まりの空白をカウント
 			var mintab = Infinity;
@@ -68,9 +65,16 @@ namespace CodeHighlight {
 			// やっとcodeオブジェクトに変換
 			var codes = [new Code(lines.join('\n'))];
 
+			// nocodeのマーキング
+			var ret: Code[] = [];
+			codes.forEach(function(code) {
+				code.markNoCodeAndStore(template.defNoCode, ret)
+			});
+			codes = Code.flatten(ret);
+
 			// codeのマーキング
-			template.define.forEach(function(def) {
-				var ret: Code[] = [];
+			template.defAsCode.forEach(function(def) {
+				ret = [];
 				codes.forEach(function(code) {
 					code.markCodeAndStore(def, ret);
 				});
@@ -80,10 +84,10 @@ namespace CodeHighlight {
 			});
 
 			// 行番号リストを作成
-			var numbers = "", cnt = 0;
-			lines.forEach(function() {
-				numbers += `<div>${++cnt}</div>`;
-			});
+			var numbers = "", cnt = 1;
+			for (var cnt = 1, len = lines.length; cnt <= len; cnt++) {
+				numbers += `<div>${cnt}</div>`;
+			}
 
 			// // 整形リストelementの生成
 			var newTag = document.createElement('div');

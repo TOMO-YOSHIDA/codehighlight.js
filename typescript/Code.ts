@@ -8,9 +8,9 @@ namespace CodeHighlight {
 		public replaced = false;
 
 		// コンストラクタでcodeを保持
-		constructor(private code: string, def?: CodeDefine) {
+		constructor(private code: string, def?: DefineAsCode) {
 			// 変換対象の場合、tagをつける
-			if (/C_H_L/.test(code)) {
+			if (/C_H_L/.test(code) && def) {
 				this.code = code.replace(/C_H_L/g, '');
 				this.tag = def.class;
 				if (def.fnc) {
@@ -24,7 +24,7 @@ namespace CodeHighlight {
 
 			var s = this.code;
 
-			if(this.replaced) {
+			if (this.replaced) {
 				return s;
 			}
 
@@ -34,20 +34,61 @@ namespace CodeHighlight {
 			});
 
 			// タグ無しならそのまま返す
-			if (!this.tag) return '<span>' + s.replace(/[\r\n]/g, '<br></span></div><div><span>');
+			// if (!this.tag) return '<span>' + s.replace(/[\r\n]/g, '<br></span></div><div><span>');
+			// if (!this.tag) return '<span>' + s.replace(/\n/g, '<br></span></div><div><span>') + '</span>';
+			if (!this.tag) return s.replace(/\n/g, '&nbsp;</div><div>');
 
 			let sTag = `<span class="${this.tag}">`,
 				eTag = `</span>`;
 
 			// 改行は</span>\r<span>に変換して複数行に備える
 			return sTag
-				+ s.replace(/[\r\n]/g, `${eTag}</div><div>${sTag}`)
+				+ s.replace(/\n/g, `${eTag}</div><div>${sTag}`)
 				+ eTag;
 
 		}
 
+		// コメント、文字列をチェックしてCode[]にする！
+		public markNoCodeAndStore(defs: DefineNoCode[], ret: Code[]) {
+
+			// すでにタグ付きならそのまま返す
+			if (this.tag) return ret.push(this);
+
+			let code = this.code;
+			var targetDef: DefineNoCode;
+
+			do {
+				targetDef = void 0;
+
+				// nocodeの出現位置を検索して、一番早く出現したものをdefに格納
+				defs.forEach(function(def) {
+					def.index = code.search(def.start);
+					if (def.index >= 0) {
+						if (!targetDef || (def.index < targetDef.index)) targetDef = def;
+					}
+				});
+
+				// 全て-1ならそのままstore
+				if (!targetDef) return ret.push(new Code(code));
+
+				// 一番小さいインデックスを返した正規表現を変換する
+				let repstr = (targetDef.str || '`$1`').replace(/`/g, Code.M);
+				code = code.replace(targetDef.regex, repstr);
+
+				// キーワードとそれ以外を独立したcodeに分割する(g変換しないので要素数は3)
+				let lines = code.split(/(C_H_L[\w\W]+?C_H_L)/);
+
+				// 分割した3つのうち、2つをretに入れて、残りの3つめを再度実行する
+				if (lines[0]) ret.push(new Code(lines[0]));
+				ret.push(new Code(lines[1], targetDef));
+				code = lines[2];
+
+				if (!code) break; // codeがまだあればくり返し
+			} while (targetDef);
+		}
+
 		// tagチェックしてCode[]にする！
-		public markCodeAndStore(def: CodeDefine, ret: Code[]) {
+		public markCodeAndStore(def: DefineAsCode, ret: Code[]) {
 			// すでにタグ付きならそのまま返す
 			if (this.tag) return ret.push(this);
 

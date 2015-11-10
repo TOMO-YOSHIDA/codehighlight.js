@@ -1,17 +1,27 @@
 namespace CodeHighlight {
 
-	export interface CodeDefine {
+	// コードとしてマークする定義
+	export interface DefineAsCode {
 		class: string;//
 		regex: RegExp;//置換対象正規表現
 		str?: string;//変換後の文字列
 		fnc?: (v: string, ...args: any[]) => string;
 	}
 
+	// コード以外のコメント、文字列リテラルの定義
+	export interface DefineNoCode extends DefineAsCode {
+		start: RegExp;	// 開始文字列(正規表現)
+		escape?: string	// escape character
+		index?: Number;
+	}
+
 	export interface CodeStructure {
 		version: string;
 		lang: RegExp;
-		define: CodeDefine[];
+		defAsCode: DefineAsCode[];
+		defNoCode: DefineNoCode[];
 	}
+
 
 	export class TemplateManager {
 

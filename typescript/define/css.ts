@@ -1,16 +1,10 @@
 CodeHighlight.addTemplate({
 	version: "0.0.1",
 	lang: /^(?:stylesheet|css[\d]*|less)$/i,
-	define: [
-		{
-			/* 複数行コメント */
-			class: "comment",
-			regex: /(\/\*[\w\W]+?\*\/)/g
-		},
-
+	defAsCode: [
 		{
 			// properties
-			class: "keyword",
+			class: "builtin",
 			regex: /(^|[;{\r\n])([\s]*)(.*?):/g,
 			str: "$1$2`$3`:"
 		},
@@ -23,11 +17,42 @@ CodeHighlight.addTemplate({
 				return `C_H_L${v}<span class="color-block" style="background:${v};"></span>C_H_L`;
 			}
 		},
+
+		{
+			// selector
+			class: "keyword",
+			regex: /(^.*?)\{/,
+			str: "`$1`{"
+		},
+
 		{
 			// values
 			class: "literal",
 			regex: /:(.*?)([;\r\n])/g,
 			str: ":`$1`$2"
+		},
+	],
+	defNoCode: [
+		{
+			/* 複数行コメント */
+			class: "comment",
+			start: /\/\*/,
+			regex: /(\/\*[\w\W]+?\*\/)/
+		},
+		{
+			// 単一行コメント(for LESS)
+			class: "comment",
+			start: /\/\//,
+			regex: /(\/\/.*?)([\r\n]+|$)/,
+			str: "`$1`$2"
+		},
+		{
+			// 文字列
+			class: "literal",
+			escape: '\\',
+			start: /['"]/,
+			regex: /(['"])(.*?[^\\]\1)/,
+			str: "`$1$2`"
 		},
 	]
 });

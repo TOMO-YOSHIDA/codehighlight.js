@@ -20,8 +20,9 @@
 		var iyana_yatsu = '<div class="ln">\t\'</div>\r\n';
 
 		if(script && scriptEnd || 1 < 2) {
-			// &を&amp;にしてもOK!!
+			/* &を&amp;にしてもOK!!
 			// &lt;もそのまま出る
+			*/
 		}
 		window.alert('YEAH!!'); // <-alert実行されないでしょ
 
@@ -39,6 +40,9 @@
 			`testMojiretsu`.replace(/Mojiretsu/g , 'Strings');
 
 			console.log("// not comment");
+		}
+		if("/* not comment" && " not comment */") { // anytime true;
+			cosole.log('/* OK! */');
 		}
 	-->
 	</script>
