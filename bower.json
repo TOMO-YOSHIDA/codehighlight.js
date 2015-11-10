@@ -1,8 +1,9 @@
 {
-  "name": "codehighlight.js",
-  "version": "0.0.3",
-  "main":[
-     "dist/codehighlight.min.js",
-     "dist/codehighlight.min.css"
-  ]
+   "name": "codehighlight.js",
+   "version": "0.0.3",
+   "main": [
+      "dist/codehighlight.min.js",
+      "dist/codehighlight.min.css"
+   ],
+   "ignore": []
 }
