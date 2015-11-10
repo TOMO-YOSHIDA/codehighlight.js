@@ -1,7 +1,7 @@
 "use strict";
 namespace CodeHighlight {
 	export class Code {
-		public static M = "@__@@";
+		public static M = "C_H_L";
 
 		// tag
 		public tag: string = void 0;
@@ -10,8 +10,8 @@ namespace CodeHighlight {
 		// コンストラクタでcodeを保持
 		constructor(private code: string, def?: CodeDefine) {
 			// 変換対象の場合、tagをつける
-			if (/@__@@/.test(code)) {
-				this.code = code.replace(/@__@@/g, '');
+			if (/C_H_L/.test(code)) {
+				this.code = code.replace(/C_H_L/g, '');
 				this.tag = def.class;
 				if (def.fnc) {
 					this.replaced = true;
@@ -66,7 +66,7 @@ namespace CodeHighlight {
 
 			// キーワードとそれ以外を独立したcodeに分割する
 			// 例：["`var`", "a = 1;"]
-			let lines = temp.split(/(@__@@[\w\W]+?@__@@)/);
+			let lines = temp.split(/(C_H_L[\w\W]+?C_H_L)/);
 
 			// string[] -> Code[]
 			lines.forEach(function(line) {

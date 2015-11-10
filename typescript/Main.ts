@@ -13,24 +13,37 @@ namespace CodeHighlight {
 	};
 
 	// code highlight実行関数
-	export function execute(target?: NodeListOf<HTMLScriptElement>) {
-		let scripts = target || document.getElementsByTagName('script');
+	export function execute(scripts?: NodeListOf<HTMLScriptElement>|NodeListOf<HTMLPhraseElement>) {
+		if (scripts) {
+			CodeHighlight.highlight(scripts);
+		} else {
+			CodeHighlight.highlight(document.getElementsByTagName('script'));
+			CodeHighlight.highlight(document.getElementsByTagName('code'));
+		}
+	}
+
+	export function highlight(scripts?: NodeListOf<HTMLScriptElement>|NodeListOf<HTMLPhraseElement>){
 
 		// scriptsはforEachで回せない、scriptブロックは変換後に削除するので後ろから回す
 		for (let i = scripts.length; i--;) {
 			var s = scripts[i];
 
+			var type = s.getAttribute('type');
+
 			// 変換対象かをチェック
-			if (!/^code\/.+$/.test(s.type)) continue;
+			if (!/^code\/.+$/.test(type)) continue;
 
 			// コードの言語を取得
-			var lang = s.type.split('/')[1];
+			var lang = type.split('/')[1];
 
 			var template: CodeStructure = TemplateManager.getTemplate(lang);
 			if (!template) continue; // テンプレートがない場合も処理しない
 
 			// titleの作成
 			var title = `<div class="title">${s.title ? `${s.title} / ` : ''}${lang}</div>`;
+
+			if(lang==="html")
+			console.log('inner:' + s.innerHTML);
 
 			// コードの最初と最後の空白を除去して改行でsplit
 			var lines = s.innerHTML.replace(/^[\s]*\n|[\s\r\n]*$/g, '').split(/[\r\n]/g);

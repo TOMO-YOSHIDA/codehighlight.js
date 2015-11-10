@@ -10,8 +10,8 @@ CodeHighlight.addTemplate({
 		{
 			// 単一行・行末コメント
 			class: "comment",
-			regex: /(\/\/.*?)(?:[ \t]*[\r\n]+|$)/g,
-			str: "`$1`\n"
+			regex: /(\/\/.*?)([\r\n]+|$)/g,
+			str: "`$1`$2"
 		},
 		{
 			// 文字列リテラル

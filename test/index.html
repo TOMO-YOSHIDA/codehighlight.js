@@ -8,17 +8,6 @@
 </head>
 
 <body>
-	<script type="code/JavaScript" title="testcode.js">
-		var a = [1,2,3,4,5];
-		Array.prototype.shuffle = function(){
-			this.sort(function(){
-				return Math.random() - 0.5 + -0.2;
-			});
-			return this;
-		};
-		a.shuffle(); // -> [5,3,2,4,1]
-	</script>
-
 	<script type="code/ECMAScript" title="hoge.js">
 	<!--
 		/**
@@ -78,33 +67,12 @@
 		}
 	</script>
 
-      <script title="IEには関数がないので自作する" type="code/ES5">
-        +function(){
-        	// ここに計測開始時間をキャッシュ
-        	var cache = {};
-
-        	// 計測開始
-        	if(!console.time) {
-        		console.time = function(key){
-        			cache[key] = Date.now();
-        		};
-        	}
-
-        	// 計測終了
-        	if(!console.timeEnd) {
-        		console.timeEnd = function(key){
-        			var end = Date.now();
-        			var start = cache[key];
-        			if(!key) return; // 対応する開始時間がなければ抜ける
-
-        			console.log(end - start + " ms");
-        			delete cache[key]; // キャッシュのお掃除
-        		};
-        	}
-        }();
-
-      </script>
-
+	<code type="code/html" title="sample.html">
+		<!-- comment -->
+		<div class="code-highlight">
+			<h1>HELLO CODE HIGHLIGHT!!</h1>
+		</div>
+	</code>
 
 	<!-- full package js -->
 	<script src="./codehighlight.js"></script>

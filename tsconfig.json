@@ -18,6 +18,7 @@
         "typescript/Main.ts",
         "typescript/TemplateManager.ts",
         "typescript/define/css.ts",
+        "typescript/define/html.ts",
         "typescript/define/javascript.ts"
     ]
 }

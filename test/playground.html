@@ -6,6 +6,10 @@
 	<title>CodeHighlight.js / Play Ground</title>
 	<link rel="stylesheet" href="./codehighlight.min.css">
 	<style>
+		.info{
+			font-size:1.1em;
+			font-weight:bold;
+		}
 		html{
 			height:100%;
 			margin:0;
@@ -30,10 +34,14 @@
 </head>
 
 <body>
+	<h1>codehighlight.js</h1>
+	<div class="info">プログラミング言語を選択してください。</div>
 	<select class='code-type'>
-		<option value='javascript'>Javasript</option>
+		<option value='Javascript'>Javasript</option>
+		<option value='css'>CSS</option>
+		<option value='HTML'>HTML</option>
 	</select>
-	<button>highlight!</button>
+	<div class="info">以下にプログラムをペースト</div>
 <textarea>
 	/*
 		this is sample code.

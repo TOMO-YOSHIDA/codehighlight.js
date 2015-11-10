@@ -20,7 +20,7 @@ CodeHighlight.addTemplate({
 			class: "literal",
 			regex: /#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}|rgb[a]?\([^\)]*?\)/g,
 			fnc: function(v: string) {
-				return `@__@@${v}<span class="color-block" style="background:${v};"></span>@__@@`;
+				return `C_H_L${v}<span class="color-block" style="background:${v};"></span>C_H_L`;
 			}
 		},
 		{
