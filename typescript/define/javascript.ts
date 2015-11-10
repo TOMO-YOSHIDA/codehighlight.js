@@ -48,7 +48,7 @@ CodeHighlight.addTemplate({
 			class: "literal",
 			escape: '\\',
 			start: /['"`]/,
-			regex: /(['"`])(.*?[^\\]\1)/,
+			regex: /(['"`])(\1|.*?[^\\]\1)/,
 			str: "`$1$2`"
 		},
 	]
