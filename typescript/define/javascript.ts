@@ -9,11 +9,6 @@ CodeHighlight.addTemplate({
 			str: "$1`$2`"
 		},
 		{
-			// 正規表現
-			class: "regexp",
-			regex: /[\b]*(\/.*?[^\\]\/[gim]*)\b/g
-		},
-		{
 			// プリミティブ
 			class: "premitive",
 			regex: /\b(true|false|NaN|null|undefined|void)\b/g
@@ -50,6 +45,12 @@ CodeHighlight.addTemplate({
 			start: /['"`]/,
 			regex: /(['"`])(\1|.*?[^\\]\1)/,
 			str: "`$1$2`"
+		},
+		{
+			// 正規表現
+			class: "regexp",
+			start: /[\b]*\/[^\*\/].*?[^\\]\/[gim]*\b/,
+			regex: /[\b]*(\/.*?[^\\]\/[gim]*)\b/
 		},
 	]
 });

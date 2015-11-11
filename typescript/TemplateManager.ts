@@ -69,12 +69,23 @@ namespace CodeHighlight {
 
 			lang = lang.toLowerCase();
 
+			let ret: CodeStructure;
+
 			// 見つかった時点でreturn するためforEachは使わない
 			for (let i = TemplateManager.templates.length; i--;) {
 				if (TemplateManager.templates[i].lang.test(lang)) {
-					return TemplateManager.templates[i];
+					ret = TemplateManager.templates[i];
+					break;
 				}
 			}
+
+			// DefineNoCodeのregexはglobalオプションを許さない！
+			if (ret) {
+				ret.defNoCode.forEach(function(def) {
+					if (def.regex.global) def.regex = new RegExp(def.regex.source);
+				});
+			}
+			return ret;
 		}
 	}
 }
