@@ -31,7 +31,7 @@
 </script>
 ```
 
-### 書き方の例：XML
+### 書き方の例2：XML
 scriptタグの中にXMLのタグが出現するとブラウザに怒られるのでcodeタグの中に書いてください。
 ```HTML
 <code type="code/html" title="sample html code">
