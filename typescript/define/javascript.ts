@@ -11,7 +11,7 @@ CodeHighlight.addTemplate({
 		{
 			// プリミティブ
 			class: "premitive",
-			regex: /\b(true|false|NaN|null|undefined|void)\b/g
+			regex: /\b(true|false|NaN|null|undefined|void|Infinity)\b/g
 		},
 		{
 			// 予約語
