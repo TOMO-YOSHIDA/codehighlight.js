@@ -57,7 +57,7 @@ namespace CodeHighlight {
 			});
 
 			// 行の始まりを合わせる
-			var rep = new RegExp(`^\\s{${mintab}}|[\s]*$`, 'g');
+			var rep = new RegExp(`^\\s{${mintab}}|[\\s]*$`, 'g');
 			lines.forEach(function(line, i) {
 				lines[i] = line.replace(rep, '');
 			});
