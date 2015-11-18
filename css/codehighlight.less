@@ -7,25 +7,25 @@
 @title-color:#FFF;
 
 //comment
-@comment-color:#AAA;
+@comment-color:#969896;
 
 //premitive
-@premitive:#00C;
+@premitive:#0086b3;
 
 //予約語
-@keyword:#909;
+@keyword:#a71d5d;
 
 //function
-@function:#C60;
+@function:#ed6a43;
 
 //リテラル(文字列、数字など)
-@literal:@premitive;
+@literal:#183691;
 
 //ビルトイン関数など
-@builtin:@keyword;
+@builtin:#ed6a43;;
 
 //正規表現
-@regexp:#363;
+@regexp:#0086b3;
 
 //shadow
 @shadow-color:#666;
@@ -42,7 +42,7 @@
 	overflow:none;
 
 	div, code, pre {
-		// font-family:"Source Han Code JP" "Source Code Pro" "Meiryo" "MS GOTHIC" sans-serif;
+		font-family:"Source Han Code JP" "Source Code Pro" "Meiryo" "MS GOTHIC" sans-serif;
 		font-size:1em;
 		margin:0;
 		border:none;
@@ -66,11 +66,9 @@
 	}
 	.premitive {
 		color:@premitive;
-		font-weight:bold;
 	}
 
 	.keyword{
-		font-weight:bold;
 		color:@keyword;
 	}
 
@@ -92,7 +90,6 @@
 
 	.comment {
 		color:@comment-color;
-		font-weight: normal;
 	}
 
 	code {
