@@ -49,10 +49,9 @@ CodeHighlight.addTemplate({
 		{
 			// 正規表現
 			class: "regexp",
-			// start: /[\b]\/[^\*\/].*?[^\\]\/[gim]*\b/,
-			start: /\/[^\*\/].*?\/[gim]*/,
-			//regex: /[\b](\/.*?[^\\]\/[gim]*)\b/
-			regex:/(\/[^\*\/].*?\/[gim]*)/,
+			start: /\/[^/*].*?[^\\]\/[gim]*/,
+			regex: /(\/[^/*].*?[^\\]\/[gim]*)/
+
 		},
 	]
 });

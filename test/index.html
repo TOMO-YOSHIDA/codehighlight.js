@@ -10,6 +10,22 @@
 <body>
 	<script type="code/ECMAScript" title="hoge.js">
 	<!--
+		var a = /A/; // １文字正規表現
+		if(/TEST|te\/st/g.test(`testMojiretsu`)) {
+			// 正規表現のテスト
+			var regexp = /ab/; // comment
+			`testMojiretsu`.replace(/Moji'retsu/g , 'Strings');
+
+			console.log("// not comment");
+		}
+		if("/* not comment" && " not comment */") { // anytime true;
+			cosole.log('/* OK! */');
+		}
+
+		// 連続コメントがおかしいのでテスト
+		// 連続コメントがおかしいのでテスト
+		// 連続コメントがおかしいのでテスト
+
 		/**
 			このセクションのコードに意味はありません！
 			連続行のコメント１
@@ -35,16 +51,6 @@
 		// commentにfunctionとかifとか
 		var text1 = "text1", text_2 = 'TEXT&2';
 
-		if(/TEST|te\/st/g.test(`testMojiretsu`)) {
-			// 正規表現のテスト
-			var regexp = /ab/; // comment
-			`testMojiretsu`.replace(/Moji'retsu/g , 'Strings');
-
-			console.log("// not comment");
-		}
-		if("/* not comment" && " not comment */") { // anytime true;
-			cosole.log('/* OK! */');
-		}
 	-->
 	</script>
 
