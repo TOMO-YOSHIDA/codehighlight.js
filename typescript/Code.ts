@@ -34,8 +34,6 @@ namespace CodeHighlight {
 			});
 
 			// タグ無しならそのまま返す
-			// if (!this.tag) return '<span>' + s.replace(/[\r\n]/g, '<br></span></div><div><span>');
-			// if (!this.tag) return '<span>' + s.replace(/\n/g, '<br></span></div><div><span>') + '</span>';
 			if (!this.tag) return s.replace(/\n/g, '&nbsp;</div><div>');
 
 			let sTag = `<span class="${this.tag}">`,
