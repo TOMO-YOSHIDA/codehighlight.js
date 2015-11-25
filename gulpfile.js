@@ -44,7 +44,6 @@ gulp.task('less', function () {
 		.pipe(concat('codehighlight.min.css'))
 		.pipe(minifycss())
 		.pipe(gulp.dest('dist'))
-		.pipe(gulp.dest('./'));
 });
 
 //htmlを出力先にコピーする
@@ -65,18 +64,16 @@ gulp.task('typescript', function () {
 		.pipe(concat('codehighlight.min.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('dist'))
-		.pipe(gulp.dest('./'));
 });
 
 //ファイルの更新を監視する
 gulp.task('watch', function () {
 	gulp.watch(tsPath, ['typescript']);
 	gulp.watch(lessPath, ['less']);
-	gulp.watch('test/**/*.html', ['html']);
 });
 
 gulp.task('build', function () {
-	runSequence('clean', ['typescript', 'less', 'html'])
+	runSequence('clean', ['typescript', 'less'])
 });
 
 // build & watch

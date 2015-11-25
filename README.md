@@ -42,6 +42,7 @@ scriptタグの中にXMLのタグが出現するとブラウザに怒られる�
 </code>
 ```
 
+<a href="http://tomo-yoshida.github.io/codehighlight.js/">codehighlight.js</a>
 
 <script type="code/javascript" title="sample code">
 	var a  = [1,2,3];
