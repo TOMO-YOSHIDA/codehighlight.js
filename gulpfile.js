@@ -31,7 +31,7 @@ var plumber = require('gulp-plumber'),
 
 // 出力フォルダのクリーンアップ
 gulp.task('clean', function () {
-	del.sync(['codehighlight.js/**/']);
+	del.sync(['public/**/']);
 });
 
 //lessをコンパイルする
@@ -40,17 +40,17 @@ gulp.task('less', function () {
 		.pipe(plum())
 		.pipe(less())
 		.pipe(autoprefix())
-		.pipe(gulp.dest('codehighlight.js'))
+		.pipe(gulp.dest('public'))
 		.pipe(concat('codehighlight.min.css'))
 		.pipe(minifycss())
 		.pipe(gulp.dest('dist'))
-		.pipe(gulp.dest('codehighlight.js'));
+		.pipe(gulp.dest('./'));
 });
 
 //htmlを出力先にコピーする
 gulp.task('html', function () {
 	gulp.src('test/**')
-		.pipe(gulp.dest('codehighlight.js'));
+		.pipe(gulp.dest('public'));
 });
 
 //typescriptをコンパイルする
@@ -59,13 +59,13 @@ gulp.task('typescript', function () {
 		.pipe(tsconfig())
 		.pipe(plum())
 		.pipe(typescript(tsSetting))
-		.pipe(gulp.dest('codehighlight.js/js'))
-		.pipe(concat('codehighlight.js'))
-		.pipe(gulp.dest('codehighlight.js'))
+		.pipe(gulp.dest('public/js'))
+		.pipe(concat('public'))
+		.pipe(gulp.dest('public'))
 		.pipe(concat('codehighlight.min.js'))
 		.pipe(uglify())
 		.pipe(gulp.dest('dist'))
-		.pipe(gulp.dest('codehighlight.js'));
+		.pipe(gulp.dest('./'));
 });
 
 //ファイルの更新を監視する

@@ -6,5 +6,3 @@ node_modules/
 typings/
 npm-debug.log
 .vscode/
-!codehighlight.js/
-!codehighlight.js/js/
