@@ -1,5 +1,9 @@
 # codehighlight.js
 
+## github pages
+<a href="http://tomo-yoshida.github.io/codehighlight.js/">codehighlight.js</a>
+<a href="http://tomo-yoshida.github.io/codehighlight.js/test/playground.html">playground</a>
+
 ## 概要
 `<script type="code/lang">〜</script>`で囲われた範囲のコードをハイライト表示する
 
@@ -9,7 +13,6 @@
 ## 特徴
 ### 良い特徴
 * サニタイズ不要でコードを貼り付けられる
-* codehighlight.cssとcodehighlight.jsのみで動作
 
 ### 悪い特徴
 * Javascriptが実行できない環境では何も表示されない
@@ -41,17 +44,6 @@ scriptタグの中にXMLのタグが出現するとブラウザに怒られる�
 	</div>
 </code>
 ```
-
-<a href="http://tomo-yoshida.github.io/codehighlight.js/">codehighlight.js</a>
-
-<script type="code/javascript" title="sample code">
-	var a  = [1,2,3];
-	console.log(a);
-</script>
-<link rel="text/css" href="dist/codehighlight.min.css"></link>
-<script src="dist/codehighlight.min.js"></script>
-<script>CodeHighlight.execute()</script>
-
 ### ハイライト用定義ファイル.ts
 typescriptで書くと構造がマッチしていないと怒られるので`typescript/define/javascript.ts`を参考に。
 * version:バージョン(未使用)
@@ -68,7 +60,6 @@ typescriptで書くと構造がマッチしていないと怒られるので`typ
 	+ fnc?:変換時に関数を使用
 	+ index?:処理に使うため、定義しても無視されます
 	+ escape?:エスケープキャラクタのつもりだがregexで事足りそうなので未使用
-
 
 ## bugs
 * Javascript:正規表現中に["'`]があると文字列が優先される -> Fixed 2015.11.11
