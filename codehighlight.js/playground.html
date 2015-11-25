@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<title>CodeHighlight.js / Play Ground</title>
+	<link rel="stylesheet" href="./codehighlight.min.css">
+	<style>
+		h1 {
+			font-family:"arial black";
+			font-weight:bold;
+		}
+		.info{
+			margin-top:1em;
+			font-size:1.1em;
+		}
+		html{
+			height:100%;
+			margin:0;
+			padding:0;
+		}
+		body {
+			margin:0;
+			padding:10px 30px;
+			height:calc(100% - 20px);
+		}
+		.right {
+			text-align: right;
+		}
+
+		textarea{
+			font-size:1em;
+			width:calc(100% - 2px);
+			height:30%;
+			resize: none;
+			padding:0;
+			box-shadow: 1px 1px 2px #666;
+			border:1px solid black;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>codehighlight.js</h1>
+	<div class="info">プログラミング言語を選択してください。</div>
+	<select class='code-type'>
+		<option value='Javascript'>Javasript</option>
+		<option value='css'>CSS</option>
+		<option value='HTML'>HTML</option>
+	</select>
+	<div class="info">以下にプログラムをペースト</div>
+<textarea>
+	/*
+		this is sample code.
+	*/
+	function(){
+		var msg = "HELLO";
+		if(true){
+			console.log(`${msg}, codehighlight.js!`);
+		}
+	};
+	// -> HELLO, codehighlight.js!
+</textarea>
+		<script src="./codehighlight.min.js"></script>
+
+		<!-- PlayGround.jsではjQueryをロードしていますが、codehighlight.jsには必須ではありません。 -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+		<script src="./playground.js"></script>
+</body>
+
+</html>
