@@ -62,6 +62,7 @@ gulp.task('typescript', function () {
 		.pipe(concat('public'))
 		.pipe(gulp.dest('public'))
 		.pipe(concat('codehighlight.min.js'))
+		.pipe(gulp.dest('public/concat'))
 		.pipe(uglify())
 		.pipe(gulp.dest('dist'))
 });

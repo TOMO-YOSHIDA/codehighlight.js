@@ -92,21 +92,24 @@
 	</code>
 
 	<!-- full package js -->
-	<script src="./dist/codehighlight.min.js"></script>
-	<script>
-		CodeHighlight.execute();
-	</script>
+	<!--<script src="./dist/codehighlight.min.js"></script>
 
 	<!-- 1つずつ読み込むデバッグ用 -->
-<!--
-	<script src="./TemplateManager.js"></script>
-	<script src="./Code.js"></script>
-	<script src="./CodeHighlight.js"></script>
-	<script>
-		CodeHighlight.loadTemplate('js/defines/javascript.js');
-	</script>
--->
 
+	<!--<script src="./public/js/TemplateManager.js"></script>
+	<script src="./public/js/Code.js"></script>
+	<script src="./public/js/Main.js"></script>
+	<script>
+		CodeHighlight.loadTemplate('./public/js/define/javascript.js');
+		CodeHighlight.loadTemplate('./public/js/define/css.js');
+		CodeHighlight.loadTemplate('./public/js/define/html.js');
+	</script>-->
+
+	<script src="./public/concat/codehighlight.min.js"></script>
+
+	<script>
+		CodeHighlight.execute();
+	</script>-->
 </body>
 
 </html>
